@@ -16,17 +16,11 @@
 		<javax.mail.version>1.4.5</javax.mail.version>
 		<mime-util.version>2.1.3</mime-util.version>
 		<xstream.version>1.4.8</xstream.version>
-		<silly-collections.version>4.4.0</silly-collections.version>
-		<test-objects.version>4.4.0</test-objects.version>	
-			
-		<!-- JAULP PROJECT versions -->
-		<jaulp.core.version>4.4.0</jaulp.core.version>
-		<!-- PROJECT MODULES versions -->
-		<jaulp.file.version>${jaulp.core.version}</jaulp.file.version>
-		<jaulp.net.version>${jaulp.core.version}</jaulp.net.version>
-		
 		<commons-codec.version>1.10</commons-codec.version>
-
+		<silly-collections.version>4.4.0</silly-collections.version>
+		<test-objects.version>4.4.0</test-objects.version>
+		<file-worker.version>4.4.0</file-worker.version>
+		<net-extensions.version>4.4.0</net-extensions.version>
 	</properties>
 
 	<dependencyManagement>
@@ -59,14 +53,14 @@
 
 			<dependency>
 				<groupId>de.alpharogroup</groupId>
-				<artifactId>jaulp.file</artifactId>
-				<version>${jaulp.file.version}</version>
+				<artifactId>file-worker</artifactId>
+				<version>${file-worker.version}</version>
 			</dependency>
 
 			<dependency>
 				<groupId>de.alpharogroup</groupId>
-				<artifactId>jaulp.net</artifactId>
-				<version>${jaulp.net.version}</version>
+				<artifactId>net-extensions</artifactId>
+				<version>${net-extensions.version}</version>
 			</dependency>
 
 			<dependency>
@@ -86,35 +80,43 @@
 	</dependencyManagement>
 
 	<dependencies>
+
 		<dependency>
 			<groupId>javax.mail</groupId>
 			<artifactId>mail</artifactId>
 		</dependency>
+
 		<dependency>
 			<groupId>eu.medsea.mimeutil</groupId>
 			<artifactId>mime-util</artifactId>
 		</dependency>
+
 		<dependency>
 			<groupId>com.thoughtworks.xstream</groupId>
 			<artifactId>xstream</artifactId>
 		</dependency>
+
 		<dependency>
 			<groupId>de.alpharogroup</groupId>
 			<artifactId>silly-collections</artifactId>
 		</dependency>
+
 		<dependency>
 			<groupId>de.alpharogroup</groupId>
-			<artifactId>jaulp.file</artifactId>
+			<artifactId>file-worker</artifactId>
 		</dependency>
+
 		<dependency>
 			<groupId>de.alpharogroup</groupId>
-			<artifactId>jaulp.net</artifactId>
+			<artifactId>net-extensions</artifactId>
 		</dependency>
+
 		<dependency>
 			<groupId>de.alpharogroup</groupId>
 			<artifactId>test-objects</artifactId>
 			<scope>test</scope>
 		</dependency>
+
 		<dependency>
 			<groupId>commons-codec</groupId>
 			<artifactId>commons-codec</artifactId>
