@@ -43,8 +43,8 @@ import de.alpharogroup.email.messages.EmailConstants;
 import de.alpharogroup.email.messages.EmailMessage;
 import de.alpharogroup.email.messages.EmailMessageWithAttachments;
 import de.alpharogroup.email.utils.EmailExtensions;
-import de.alpharogroup.lang.PackageUtils;
-import de.alpharogroup.lang.PropertiesUtils;
+import de.alpharogroup.lang.PackageExtensions;
+import de.alpharogroup.lang.PropertiesExtensions;
 
 /**
  * Helper-class for sending emails.
@@ -131,11 +131,11 @@ public class SendEmail implements SendMail
 	 */
 	private void loadProperties()
 	{
-		final String packagePath = PackageUtils.getPackagePathWithSlash(this);
+		final String packagePath = PackageExtensions.getPackagePathWithSlash(this);
 		final String propertiespath = packagePath + EmailConstants.PROPERTIES_FILENAME;
 		try
 		{
-			properties = PropertiesUtils.loadProperties(this.getClass(), propertiespath);
+			properties = PropertiesExtensions.loadProperties(this.getClass(), propertiespath);
 		}
 		catch (final IOException e)
 		{
@@ -145,7 +145,7 @@ public class SendEmail implements SendMail
 		{
 			try
 			{
-				properties = PropertiesUtils.getLocalPropertiesFromClass(this.getClass(),
+				properties = PropertiesExtensions.getLocalPropertiesFromClass(this.getClass(),
 					this.getClass(), null);
 			}
 			catch (final Exception e)

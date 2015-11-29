@@ -36,7 +36,7 @@ import org.apache.commons.codec.binary.Base64;
 import org.junit.Test;
 
 import de.alpharogroup.email.messages.Mimetypes;
-import de.alpharogroup.file.read.ReadFileUtils;
+import de.alpharogroup.file.read.ReadFileExtensions;
 
 public class ByteArrayDataSourceTest
 {
@@ -46,7 +46,7 @@ public class ByteArrayDataSourceTest
 		if (dataHandler != null)
 		{
 			final InputStream input = dataHandler.getDataSource().getInputStream();
-			final byte[] data = ReadFileUtils.toByteArray(input);
+			final byte[] data = ReadFileExtensions.toByteArray(input);
 			return Base64.encodeBase64String(data);
 		}
 		return "";

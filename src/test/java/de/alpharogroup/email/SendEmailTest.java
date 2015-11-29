@@ -51,7 +51,7 @@ import de.alpharogroup.email.send.SendEmail;
 import de.alpharogroup.email.send.SendMail;
 import de.alpharogroup.email.utils.EmailExtensions;
 import de.alpharogroup.lang.ClassExtensions;
-import de.alpharogroup.lang.PackageUtils;
+import de.alpharogroup.lang.PackageExtensions;
 import de.alpharogroup.string.StringExtensions;
 
 @ExtensionMethod(StringExtensions.class)
@@ -119,7 +119,7 @@ public class SendEmailTest
 
 		final BodyPart gif = new MimeBodyPart();
 		gif.setFileName("green.gif");
-		final String path = PackageUtils.getPackagePathWithSlash(this);
+		final String path = PackageExtensions.getPackagePathWithSlash(this);
 		final String filePath = path + "test.gif";
 		System.out.println("filePath:" + filePath);
 		final File giffile = ClassExtensions.getResourceAsFile(filePath, this);
