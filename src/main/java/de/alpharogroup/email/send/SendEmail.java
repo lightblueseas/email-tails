@@ -24,7 +24,6 @@
  */
 package de.alpharogroup.email.send;
 
-import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -38,13 +37,12 @@ import javax.mail.Session;
 import javax.mail.Transport;
 import javax.mail.internet.AddressException;
 
-import lombok.Getter;
 import de.alpharogroup.email.messages.EmailConstants;
 import de.alpharogroup.email.messages.EmailMessage;
 import de.alpharogroup.email.messages.EmailMessageWithAttachments;
 import de.alpharogroup.email.utils.EmailExtensions;
-import de.alpharogroup.lang.PackageExtensions;
-import de.alpharogroup.lang.PropertiesExtensions;
+import de.alpharogroup.resourcebundle.properties.PropertiesExtensions;
+import lombok.Getter;
 
 /**
  * Helper-class for sending emails.
@@ -131,28 +129,7 @@ public class SendEmail implements SendMail
 	 */
 	private void loadProperties()
 	{
-		final String packagePath = PackageExtensions.getPackagePathWithSlash(this);
-		final String propertiespath = packagePath + EmailConstants.PROPERTIES_FILENAME;
-		try
-		{
-			properties = PropertiesExtensions.loadProperties(this.getClass(), propertiespath);
-		}
-		catch (final IOException e)
-		{
-			e.printStackTrace();
-		}
-		if (properties == null)
-		{
-			try
-			{
-				properties = PropertiesExtensions.getLocalPropertiesFromClass(this.getClass(),
-					this.getClass(), null);
-			}
-			catch (final Exception e)
-			{
-				e.printStackTrace();
-			}
-		}
+		properties = PropertiesExtensions.loadProperties(this, EmailConstants.PROPERTIES_FILENAME);		
 	}
 
 	/**
