@@ -25,7 +25,7 @@
 package de.alpharogroup.email.properties;
 
 /**
- * The Class MailPropertiesConst.
+ * The class MailPropertiesConst.
  */
 public abstract class MailPropertiesConst
 {
