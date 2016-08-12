@@ -25,7 +25,7 @@
 package de.alpharogroup.email.messages;
 
 /**
- * The Class EmailConstants for constants.
+ * The class EmailConstants for constants.
  */
 public abstract class EmailConstants
 {
