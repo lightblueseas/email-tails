@@ -41,7 +41,7 @@ import de.alpharogroup.email.messages.EmailMessage;
 import de.alpharogroup.string.StringExtensions;
 
 /**
- * The Class EmailExtensions provides methods for create email addresses and validate email
+ * The class EmailExtensions provides methods for create email addresses and validate email
  * addresses.
  */
 @ExtensionMethod(StringExtensions.class)
