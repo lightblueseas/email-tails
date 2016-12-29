@@ -1,9 +1,9 @@
 package de.alpharogroup;
 
 /**
- * The class {@link AlexProgramm} is the programm of Alex.
+ * The class {@link LeoProgramm} is the programm of Leo.
  */
-public class AlexProgramm {
+public class LeoProgramm {
 
     /**
      * The main method.
@@ -11,7 +11,7 @@ public class AlexProgramm {
      * @param args the arguments
      */
     public static void main(final String... args) {
-        System.out.println("Hallo alex!");
+        System.out.println("Hallo leo! blue lu");
     }
 
 }
