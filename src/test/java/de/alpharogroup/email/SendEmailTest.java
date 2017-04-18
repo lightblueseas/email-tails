@@ -1,7 +1,7 @@
 /**
  * The MIT License
  *
- * Copyright (C) 2007 Asterios Raptis
+ * Copyright (C) 2015 Asterios Raptis
  *
  * Permission is hereby granted, free of charge, to any person obtaining
  * a copy of this software and associated documentation files (the
@@ -38,8 +38,6 @@ import javax.mail.internet.AddressException;
 import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMultipart;
 
-import lombok.experimental.ExtensionMethod;
-
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
@@ -53,6 +51,7 @@ import de.alpharogroup.email.utils.EmailExtensions;
 import de.alpharogroup.lang.ClassExtensions;
 import de.alpharogroup.lang.PackageExtensions;
 import de.alpharogroup.string.StringExtensions;
+import lombok.experimental.ExtensionMethod;
 
 @ExtensionMethod(StringExtensions.class)
 public class SendEmailTest
@@ -74,14 +73,15 @@ public class SendEmailTest
 	}
 
 	@Test(enabled = false)
-	public void testSendEmailEmailAttachments_01() throws AddressException,
-		UnsupportedEncodingException, MessagingException
+	public void testSendEmailEmailAttachments_01()
+		throws AddressException, UnsupportedEncodingException, MessagingException
 	{
 		final EmailMessage message = new EmailMessage();
 		final SendMail sender = new SendEmail();
 		final Address from = EmailExtensions.newAddress("asterios.raptis@gmx.net", null);
 		message.addFrom(EmailExtensions.getAddressArray(from));
-		message.addTo(EmailExtensions.newAddress("asterios.raptis@yahoo.gr", "Asterios Raptis", null));
+		message
+			.addTo(EmailExtensions.newAddress("asterios.raptis@yahoo.gr", "Asterios Raptis", null));
 		message.setSubject("Text/plain Attachments");
 
 		message.setText("This is the text from the email.");
@@ -108,7 +108,8 @@ public class SendEmailTest
 		final EmailMessage message = new EmailMessage();
 		final Address from = EmailExtensions.newAddress("asterios.raptis@gmx.net", null);
 		message.addFrom(EmailExtensions.getAddressArray(from));
-		message.addTo(EmailExtensions.newAddress("asterios.raptis@yahoo.gr", "Asterios Raptis", null));
+		message
+			.addTo(EmailExtensions.newAddress("asterios.raptis@yahoo.gr", "Asterios Raptis", null));
 		message.setSubject("mailerWithNewMethods.GIF");
 		final EmailMessageWithAttachments mailer = new EmailMessageWithAttachments(message);
 
@@ -131,12 +132,13 @@ public class SendEmailTest
 	}
 
 	@Test(enabled = false)
-	public void testSendEmailEmailMessage() throws AddressException, UnsupportedEncodingException,
-		MessagingException
+	public void testSendEmailEmailMessage()
+		throws AddressException, UnsupportedEncodingException, MessagingException
 	{
 		final SendMail sender = new SendEmail(emailProperties);
 		final EmailMessage message = new EmailMessage();
-		final Address from = EmailExtensions.newAddress("asterios.raptis@gmx.net", "Asterios Raptis");
+		final Address from = EmailExtensions.newAddress("asterios.raptis@gmx.net",
+			"Asterios Raptis");
 		message.addFrom(EmailExtensions.getAddressArray(from));
 		message.addTo(EmailExtensions.newAddress("asterios.raptis@yahoo.gr", "Asterios Raptis",
 			EmailConstants.CHARSET_UTF8));
@@ -153,12 +155,13 @@ public class SendEmailTest
 	}
 
 	@Test(enabled = false)
-	public void testSendEmailStringStringStringString() throws AddressException,
-		UnsupportedEncodingException, MessagingException
+	public void testSendEmailStringStringStringString()
+		throws AddressException, UnsupportedEncodingException, MessagingException
 	{
 		final SendMail sender = new SendEmail(emailProperties);
 		final EmailMessage message = new EmailMessage();
-		final Address from = EmailExtensions.newAddress("asterios.raptis@gmx.net", "Asterios Raptis");
+		final Address from = EmailExtensions.newAddress("asterios.raptis@gmx.net",
+			"Asterios Raptis");
 		message.addFrom(EmailExtensions.getAddressArray(from));
 		message.addTo(EmailExtensions.newAddress("asterios.raptis@yahoo.gr", "Asterios Raptis",
 			EmailConstants.CHARSET_UTF8));

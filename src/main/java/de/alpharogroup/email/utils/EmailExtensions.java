@@ -1,7 +1,7 @@
 /**
  * The MIT License
  *
- * Copyright (C) 2007 Asterios Raptis
+ * Copyright (C) 2015 Asterios Raptis
  *
  * Permission is hereby granted, free of charge, to any person obtaining
  * a copy of this software and associated documentation files (the
@@ -32,13 +32,12 @@ import javax.mail.MessagingException;
 import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
 
-import lombok.experimental.ExtensionMethod;
-
 import org.apache.log4j.Logger;
 
 import de.alpharogroup.email.messages.EmailConstants;
 import de.alpharogroup.email.messages.EmailMessage;
 import de.alpharogroup.string.StringExtensions;
+import lombok.experimental.ExtensionMethod;
 
 /**
  * The class EmailExtensions provides methods for create email addresses and validate email
@@ -79,8 +78,9 @@ public class EmailExtensions
 		}
 		catch (final AddressException e2)
 		{
-			logger.error("AddressException when tryin to create the recipient Address:"
-				+ recipientEmail, e2);
+			logger.error(
+				"AddressException when tryin to create the recipient Address:" + recipientEmail,
+				e2);
 			e2.printStackTrace();
 		}
 		catch (final UnsupportedEncodingException e2)
@@ -105,14 +105,15 @@ public class EmailExtensions
 				}
 				catch (final AddressException e1)
 				{
-					logger.error("AddressException when tryin to set the To Address:"
-						+ recipientEmail, e1);
+					logger.error(
+						"AddressException when tryin to set the To Address:" + recipientEmail, e1);
 					e1.printStackTrace();
 				}
 				catch (final MessagingException e1)
 				{
-					logger.error("MessagingException when tryin to set the To Address:"
-						+ recipientEmail, e1);
+					logger.error(
+						"MessagingException when tryin to set the To Address:" + recipientEmail,
+						e1);
 					e1.printStackTrace();
 				}
 				e.printStackTrace();
@@ -132,8 +133,8 @@ public class EmailExtensions
 			}
 			catch (final MessagingException e1)
 			{
-				logger.error("MessagingException when tryin to set the To Address:"
-					+ recipientEmail, e1);
+				logger.error(
+					"MessagingException when tryin to set the To Address:" + recipientEmail, e1);
 				e1.printStackTrace();
 			}
 		}
@@ -198,8 +199,8 @@ public class EmailExtensions
 	 * @throws UnsupportedEncodingException
 	 *             if an error occurs.
 	 */
-	public static Address newAddress(final String address) throws AddressException,
-		UnsupportedEncodingException
+	public static Address newAddress(final String address)
+		throws AddressException, UnsupportedEncodingException
 	{
 		return newAddress(address, null, null);
 	}
@@ -311,8 +312,8 @@ public class EmailExtensions
 				}
 				catch (final AddressException e1)
 				{
-					logger.error("AddressException when tryin to set the From Address:"
-						+ senderEmail, e1);
+					logger.error(
+						"AddressException when tryin to set the From Address:" + senderEmail, e1);
 					e1.printStackTrace();
 				}
 				catch (final UnsupportedEncodingException e1)
@@ -323,8 +324,8 @@ public class EmailExtensions
 				}
 				catch (final MessagingException e1)
 				{
-					logger.error("MessagingException when tryin to set the From Address:"
-						+ senderEmail, e1);
+					logger.error(
+						"MessagingException when tryin to set the From Address:" + senderEmail, e1);
 					e1.printStackTrace();
 				}
 				e.printStackTrace();
@@ -350,8 +351,8 @@ public class EmailExtensions
 			}
 			catch (final MessagingException e1)
 			{
-				logger.error(
-					"MessagingException when tryin to set the From Address:" + senderEmail, e1);
+				logger.error("MessagingException when tryin to set the From Address:" + senderEmail,
+					e1);
 				e1.printStackTrace();
 			}
 		}
