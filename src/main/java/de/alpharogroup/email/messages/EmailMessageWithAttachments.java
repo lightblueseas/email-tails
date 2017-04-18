@@ -34,8 +34,8 @@ import javax.mail.MessagingException;
 import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMultipart;
 
-import lombok.Getter;
 import de.alpharogroup.email.data.sources.ByteArrayDataSource;
+import lombok.Getter;
 
 /**
  * This class adds the functionality to add attachments to the EmailMessage.

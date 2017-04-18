@@ -129,7 +129,7 @@ public class SendEmail implements SendMail
 	 */
 	private void loadProperties()
 	{
-		properties = PropertiesExtensions.loadProperties(this, EmailConstants.PROPERTIES_FILENAME);		
+		properties = PropertiesExtensions.loadProperties(this, EmailConstants.PROPERTIES_FILENAME);
 	}
 
 	/**
@@ -137,11 +137,12 @@ public class SendEmail implements SendMail
 	 */
 	@Override
 	public String sendEmail(final String to, final String from, final String subject,
-		final String message) throws AddressException, UnsupportedEncodingException,
-		MessagingException
+		final String message)
+		throws AddressException, UnsupportedEncodingException, MessagingException
 	{
 		String messageId = null;
-		final Address[] fromAddress = EmailExtensions.getAddressArray(EmailExtensions.newAddress(from, null));
+		final Address[] fromAddress = EmailExtensions
+			.getAddressArray(EmailExtensions.newAddress(from, null));
 		final Address toAddress = EmailExtensions.newAddress(to, null, null);
 		final EmailMessage email = new EmailMessage();
 		email.addFrom(fromAddress);
@@ -198,8 +199,8 @@ public class SendEmail implements SendMail
 	 * {@inheritDoc}
 	 */
 	@Override
-	public String sendEmailMessageWithAttachments(final EmailMessageWithAttachments emailAttachments)
-		throws MessagingException
+	public String sendEmailMessageWithAttachments(
+		final EmailMessageWithAttachments emailAttachments) throws MessagingException
 	{
 		return sendEmailMessage(emailAttachments.getEmailMessage());
 	}
