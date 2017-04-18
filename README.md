@@ -22,7 +22,7 @@ Add the following maven dependency to your project `pom.xml` if you want to impo
 Than you can add the dependency to your dependencies:
 
 		<!-- email-tails version -->
-		<email-tails.version>4.14.0</email-tails.version>
+		<email-tails.version>4.15.0</email-tails.version>
 
 		<dependencies>
 			...
@@ -50,6 +50,9 @@ Don't forget to add new units tests on your changes.
 Do not hesitate to contact the email-tails developers with your questions, concerns, comments, bug reports, or feature requests.
 - Feature requests, questions and bug reports can be reported at the [issues page](https://github.com/lightblueseas/email-tails/issues).
 
+## Note
+
+No animals were harmed in the making of this library.
 
 # Donate
 
