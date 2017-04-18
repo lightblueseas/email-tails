@@ -1,7 +1,7 @@
 /**
  * The MIT License
  *
- * Copyright (C) 2007 Asterios Raptis
+ * Copyright (C) 2015 Asterios Raptis
  *
  * Permission is hereby granted, free of charge, to any person obtaining
  * a copy of this software and associated documentation files (the
@@ -47,30 +47,26 @@ public interface SendMail
 	boolean isDebug();
 
 	/**
-	 * Sends the EmailMessage thats wrappes from the EmailMessagWithAttachments.
+	 * Sends a simple plain text email.
 	 *
-	 * @param emailAttachments
-	 *            The EmailAttachments who wrappes the EmailMessage.
-	 *
+	 * @param to
+	 *            The to Address.
+	 * @param from
+	 *            The from Address.
+	 * @param subject
+	 *            The subject from the email.
+	 * @param message
+	 *            The Message from the email.
 	 * @return 's the messageid.
-	 *
+	 * @throws AddressException
+	 *             the address exception
+	 * @throws UnsupportedEncodingException
+	 *             if an error occurs by encoding.
 	 * @throws MessagingException
-	 *             if an error occurs.
+	 *             if an error occurs by sending the message.
 	 */
-	String sendEmailMessageWithAttachments(final EmailMessageWithAttachments emailAttachments)
-		throws MessagingException;
-
-	/**
-	 * Send email messages with atachments.
-	 *
-	 * @param emailAttachments
-	 *            the email attachments
-	 * @return the collection
-	 * @throws MessagingException
-	 *             if an error occurs.
-	 */
-	Collection<String> sendEmailMessagesWithAtachments(
-		final Collection<EmailMessageWithAttachments> emailAttachments) throws MessagingException;
+	String sendEmail(final String to, final String from, final String subject, final String message)
+		throws AddressException, UnsupportedEncodingException, MessagingException;
 
 	/**
 	 * Sends the given EmailMessage.
@@ -98,26 +94,30 @@ public interface SendMail
 		throws MessagingException;
 
 	/**
-	 * Sends a simple plain text email.
+	 * Send email messages with atachments.
 	 *
-	 * @param to
-	 *            The to Address.
-	 * @param from
-	 *            The from Address.
-	 * @param subject
-	 *            The subject from the email.
-	 * @param message
-	 *            The Message from the email.
-	 * @return 's the messageid.
-	 * @throws AddressException
-	 *             the address exception
-	 * @throws UnsupportedEncodingException
-	 *             if an error occurs by encoding.
+	 * @param emailAttachments
+	 *            the email attachments
+	 * @return the collection
 	 * @throws MessagingException
-	 *             if an error occurs by sending the message.
+	 *             if an error occurs.
 	 */
-	String sendEmail(final String to, final String from, final String subject, final String message)
-		throws AddressException, UnsupportedEncodingException, MessagingException;
+	Collection<String> sendEmailMessagesWithAtachments(
+		final Collection<EmailMessageWithAttachments> emailAttachments) throws MessagingException;
+
+	/**
+	 * Sends the EmailMessage thats wrappes from the EmailMessagWithAttachments.
+	 *
+	 * @param emailAttachments
+	 *            The EmailAttachments who wrappes the EmailMessage.
+	 *
+	 * @return 's the messageid.
+	 *
+	 * @throws MessagingException
+	 *             if an error occurs.
+	 */
+	String sendEmailMessageWithAttachments(final EmailMessageWithAttachments emailAttachments)
+		throws MessagingException;
 
 	/**
 	 * Sets the debug flag.
