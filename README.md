@@ -47,7 +47,7 @@ The source code for email-tails are on GitHub. Please feel free to fork and send
 
 Create your own fork of [lightblueseas/email-tails/fork](https://github.com/lightblueseas/email-tails/fork)
 
-To share your changes, [submit a pull request](https://github.com/lightblueseas/email-tails/pull/new/master).
+To share your changes, [submit a pull request](https://github.com/lightblueseas/email-tails/pull/new/develop).
 
 Don't forget to add new units tests on your changes.
 
