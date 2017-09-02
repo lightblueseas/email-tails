@@ -45,7 +45,7 @@
 	</issueManagement>
 
 	<properties>
-		<silly-collections.version>4.16.0</silly-collections.version>
+		<silly-collections.version>4.17.0</silly-collections.version>
 		<test-objects.version>4.16.0</test-objects.version>
 		<file-worker.version>4.15.0</file-worker.version>
 		<net-extensions.version>4.12.0</net-extensions.version>
