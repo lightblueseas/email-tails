@@ -53,12 +53,24 @@ import de.alpharogroup.lang.PackageExtensions;
 import de.alpharogroup.string.StringExtensions;
 import lombok.experimental.ExtensionMethod;
 
+/**
+ * Test class for the class {@link SendEmail}.
+ *
+ * @version 1.0
+ * @author Asterios Raptis
+ */
 @ExtensionMethod(StringExtensions.class)
 public class SendEmailTest
 {
 
+	/** The email properties. */
 	private Properties emailProperties = null;
 
+	/**
+	 * Sets the up.
+	 *
+	 * @throws Exception the exception
+	 */
 	@BeforeMethod
 	public void setUp() throws Exception
 	{
@@ -66,6 +78,11 @@ public class SendEmailTest
 		// emailProperties.put( "mail.smtp.host", "localhost" );
 	}
 
+	/**
+	 * Tear down.
+	 *
+	 * @throws Exception the exception
+	 */
 	@AfterMethod
 	public void tearDown() throws Exception
 	{
