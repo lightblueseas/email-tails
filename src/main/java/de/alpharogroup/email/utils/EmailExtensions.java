@@ -27,6 +27,7 @@ package de.alpharogroup.email.utils;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
+import java.util.Base64;
 
 import javax.activation.DataHandler;
 import javax.mail.Address;
@@ -35,7 +36,6 @@ import javax.mail.MessagingException;
 import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
 
-import org.apache.commons.codec.binary.Base64;
 import org.apache.log4j.Logger;
 
 import de.alpharogroup.email.messages.EmailConstants;
@@ -401,7 +401,8 @@ public class EmailExtensions
 		{
 			final InputStream input = dataHandler.getDataSource().getInputStream();
 			final byte[] data = ReadFileExtensions.toByteArray(input);
-			return Base64.encodeBase64String(data);
+			// TODO check if the output is the same...
+			return Base64.getEncoder().encodeToString(data);
 		}
 		return "";
 	}
