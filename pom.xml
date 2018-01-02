@@ -6,7 +6,7 @@
 	<parent>
 		<groupId>de.alpharogroup</groupId>
 		<artifactId>mvn-java-parent</artifactId>
-		<version>3.3.0</version>
+		<version>3.4.0</version>
 		<relativePath></relativePath>
 	</parent>
 
@@ -22,8 +22,8 @@
 	<url>https://github.com/lightblueseas/email-tails</url>
 
 	<properties>
-		<silly-collections.version>4.21.2</silly-collections.version>
-		<test-objects.version>4.19.0</test-objects.version>
+		<silly-collections.version>4.22.0</silly-collections.version>
+		<test-objects.version>4.21.0</test-objects.version>
 		<file-worker.version>4.18.0</file-worker.version>
 		<net-extensions.version>4.12.0</net-extensions.version>
 		<!-- RESOURCEBUNDLE-CORE versions -->
