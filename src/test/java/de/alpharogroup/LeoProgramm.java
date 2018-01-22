@@ -22,42 +22,23 @@
  * OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
-package de.alpharogroup.email.data.sources;
-
-import static org.testng.AssertJUnit.assertEquals;
-
-import java.io.IOException;
-
-import javax.activation.DataHandler;
-import javax.activation.DataSource;
-
-import org.apache.commons.codec.binary.Base64;
-import org.testng.annotations.Test;
-
-import de.alpharogroup.email.messages.Mimetypes;
-import de.alpharogroup.email.utils.EmailExtensions;
+package de.alpharogroup;
 
 /**
- * Test class for the class {@link ByteArrayDataSource}.
+ * The class {@link LeoProgramm} is the programm of Leo.
  */
-public class ByteArrayDataSourceTest
+public class LeoProgramm
 {
 
 	/**
-	 * Test method for the constructor of {@link ByteArrayDataSource}.
+	 * The main method.
 	 *
-	 * @throws IOException Signals that an I/O exception has occurred.
+	 * @param args
+	 *            the arguments
 	 */
-	@Test
-	public void testByteArrayDataSource() throws IOException
+	public static void main(final String... args)
 	{
-		final String expected = "Sample Data";
-		final DataSource dataSource = new ByteArrayDataSource(expected.getBytes(),
-			Mimetypes.TEXT_PLAIN.getMimetype());
-		final DataHandler dataHandler = new DataHandler(dataSource);
-		final String rawString = EmailExtensions.getString(dataHandler);
-		final String actual = new String(Base64.decodeBase64(rawString));
-		assertEquals("Not expected content", expected, actual);
+		System.out.println("Hallo leo! blue lu");
 	}
 
 }

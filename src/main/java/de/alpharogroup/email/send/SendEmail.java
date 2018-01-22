@@ -1,7 +1,7 @@
 /**
  * The MIT License
  *
- * Copyright (C) 2007 Asterios Raptis
+ * Copyright (C) 2015 Asterios Raptis
  *
  * Permission is hereby granted, free of charge, to any person obtaining
  * a copy of this software and associated documentation files (the
@@ -41,7 +41,7 @@ import de.alpharogroup.email.messages.EmailConstants;
 import de.alpharogroup.email.messages.EmailMessage;
 import de.alpharogroup.email.messages.EmailMessageWithAttachments;
 import de.alpharogroup.email.utils.EmailExtensions;
-import de.alpharogroup.resourcebundle.properties.PropertiesExtensions;
+import de.alpharogroup.resourcebundle.properties.PropertiesFileExtensions;
 import lombok.Getter;
 
 /**
@@ -129,7 +129,7 @@ public class SendEmail implements SendMail
 	 */
 	private void loadProperties()
 	{
-		properties = PropertiesExtensions.loadProperties(this, EmailConstants.PROPERTIES_FILENAME);		
+		properties = PropertiesFileExtensions.loadProperties(this, EmailConstants.PROPERTIES_FILENAME);
 	}
 
 	/**
@@ -137,11 +137,12 @@ public class SendEmail implements SendMail
 	 */
 	@Override
 	public String sendEmail(final String to, final String from, final String subject,
-		final String message) throws AddressException, UnsupportedEncodingException,
-		MessagingException
+		final String message)
+		throws AddressException, UnsupportedEncodingException, MessagingException
 	{
 		String messageId = null;
-		final Address[] fromAddress = EmailExtensions.getAddressArray(EmailExtensions.newAddress(from, null));
+		final Address[] fromAddress = EmailExtensions
+			.getAddressArray(EmailExtensions.newAddress(from, null));
 		final Address toAddress = EmailExtensions.newAddress(to, null, null);
 		final EmailMessage email = new EmailMessage();
 		email.addFrom(fromAddress);
@@ -198,8 +199,8 @@ public class SendEmail implements SendMail
 	 * {@inheritDoc}
 	 */
 	@Override
-	public String sendEmailMessageWithAttachments(final EmailMessageWithAttachments emailAttachments)
-		throws MessagingException
+	public String sendEmailMessageWithAttachments(
+		final EmailMessageWithAttachments emailAttachments) throws MessagingException
 	{
 		return sendEmailMessage(emailAttachments.getEmailMessage());
 	}

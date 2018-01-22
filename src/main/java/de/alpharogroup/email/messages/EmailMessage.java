@@ -1,7 +1,7 @@
 /**
  * The MIT License
  *
- * Copyright (C) 2007 Asterios Raptis
+ * Copyright (C) 2015 Asterios Raptis
  *
  * Permission is hereby granted, free of charge, to any person obtaining
  * a copy of this software and associated documentation files (the
@@ -35,8 +35,8 @@ import javax.mail.Session;
 import javax.mail.internet.AddressException;
 import javax.mail.internet.MimeMessage;
 
-import lombok.Getter;
 import de.alpharogroup.email.utils.EmailExtensions;
+import lombok.Getter;
 
 /**
  * This class represents an email message.
@@ -318,8 +318,8 @@ public class EmailMessage extends MimeMessage implements Serializable
 	 * @throws MessagingException
 	 *             the messaging exception
 	 */
-	public void setFrom(final String senderEmail) throws AddressException,
-		UnsupportedEncodingException, MessagingException
+	public void setFrom(final String senderEmail)
+		throws AddressException, UnsupportedEncodingException, MessagingException
 	{
 		final Address fromEmail = EmailExtensions.newAddress(senderEmail);
 		super.setFrom(fromEmail);
