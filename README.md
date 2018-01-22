@@ -1,22 +1,14 @@
 # Overview
 
+[![Build Status](https://travis-ci.org/lightblueseas/email-tails.svg?branch=master)](https://travis-ci.org/lightblueseas/email-tails)
+[![Maven Central](https://maven-badges.herokuapp.com/maven-central/de.alpharogroup/email-tails/badge.svg)](https://maven-badges.herokuapp.com/maven-central/de.alpharogroup/email-tails)
+[![Javadocs](http://www.javadoc.io/badge/de.alpharogroup/email-tails.svg)](http://www.javadoc.io/doc/de.alpharogroup/email-tails)
+
 Project for send emails with attachments. 
 
 ## License
 
 The source code comes under the liberal MIT License, making email-tails great for all types of applications.
-
-## Build status
-
-[![Build Status](https://travis-ci.org/lightblueseas/email-tails.svg?branch=master)](https://travis-ci.org/lightblueseas/email-tails)
-
-## Maven Central
-
-[![Maven Central](https://maven-badges.herokuapp.com/maven-central/de.alpharogroup/email-tails/badge.svg)](https://maven-badges.herokuapp.com/maven-central/de.alpharogroup/email-tails)
-
-## javadoc
-
-email-tails [![Javadocs](http://www.javadoc.io/badge/de.alpharogroup/email-tails.svg)](http://www.javadoc.io/doc/de.alpharogroup/email-tails)
 
 ## Maven dependency
 
