@@ -35,7 +35,7 @@ import de.alpharogroup.file.search.PathFinder;
 import de.alpharogroup.test.messages.TestMessagesExtensions;
 
 /**
- * Test class for the class {@link Mimetypes}.
+ * The unit test class for the class {@link Mimetypes}.
  *
  * @version 1.0
  * @author Asterios Raptis
