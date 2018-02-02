@@ -38,7 +38,7 @@ import de.alpharogroup.email.messages.Mimetypes;
 import de.alpharogroup.email.utils.EmailExtensions;
 
 /**
- * Test class for the class {@link ByteArrayDataSource}.
+ * The unit test class for the class {@link ByteArrayDataSource}.
  */
 public class ByteArrayDataSourceTest
 {

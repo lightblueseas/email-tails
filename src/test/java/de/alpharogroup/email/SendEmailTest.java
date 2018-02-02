@@ -54,7 +54,7 @@ import de.alpharogroup.string.StringExtensions;
 import lombok.experimental.ExtensionMethod;
 
 /**
- * Test class for the class {@link SendEmail}.
+ * The unit test class for the class {@link SendEmail}.
  *
  * @version 1.0
  * @author Asterios Raptis
