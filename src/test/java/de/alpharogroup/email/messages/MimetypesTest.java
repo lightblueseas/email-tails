@@ -24,24 +24,43 @@
  */
 package de.alpharogroup.email.messages;
 
+import static org.testng.AssertJUnit.assertTrue;
+
 import java.io.File;
 import java.io.IOException;
 
 import org.testng.annotations.Test;
 
 import de.alpharogroup.file.search.PathFinder;
+import de.alpharogroup.test.messages.TestMessagesExtensions;
 
-
+/**
+ * The unit test class for the class {@link Mimetypes}.
+ *
+ * @version 1.0
+ * @author Asterios Raptis
+ */
 public class MimetypesTest
 {
 
+	/**
+	 * Test method for {@link Mimetypes#getMimeType(File)}.
+	 *
+	 * @throws IOException
+	 *             Signals that an I/O exception has occurred.
+	 */
 	@Test
 	public void testGetMimeType() throws IOException
 	{
+		String expected;
+		String actual;
 		final File testResoureDir = PathFinder.getSrcTestResourcesDir();
 		final File xmlFile = new File(testResoureDir, "testng.xml");
-		final String mimeType = Mimetypes.getMimeType(xmlFile);
-		System.out.println(mimeType);
+		// check if xml MimeType
+		expected = "application/xml";
+		actual = Mimetypes.getMimeType(xmlFile);
+		assertTrue(TestMessagesExtensions.newFailMessage("Mimetype", expected, actual),
+			expected.equals(actual));
 	}
 
 }

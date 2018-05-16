@@ -41,7 +41,7 @@ import de.alpharogroup.email.messages.EmailConstants;
 import de.alpharogroup.email.messages.EmailMessage;
 import de.alpharogroup.email.messages.EmailMessageWithAttachments;
 import de.alpharogroup.email.utils.EmailExtensions;
-import de.alpharogroup.resourcebundle.properties.PropertiesExtensions;
+import de.alpharogroup.resourcebundle.properties.PropertiesFileExtensions;
 import lombok.Getter;
 
 /**
@@ -129,7 +129,7 @@ public class SendEmail implements SendMail
 	 */
 	private void loadProperties()
 	{
-		properties = PropertiesExtensions.loadProperties(this, EmailConstants.PROPERTIES_FILENAME);
+		properties = PropertiesFileExtensions.loadProperties(this, EmailConstants.PROPERTIES_FILENAME);
 	}
 
 	/**

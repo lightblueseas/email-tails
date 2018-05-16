@@ -24,34 +24,30 @@
  */
 package de.alpharogroup.email.data.sources;
 
-import static org.junit.Assert.assertEquals;
+import static org.testng.AssertJUnit.assertEquals;
 
 import java.io.IOException;
-import java.io.InputStream;
 
 import javax.activation.DataHandler;
 import javax.activation.DataSource;
 
 import org.apache.commons.codec.binary.Base64;
-import org.junit.Test;
+import org.testng.annotations.Test;
 
 import de.alpharogroup.email.messages.Mimetypes;
-import de.alpharogroup.file.read.ReadFileExtensions;
+import de.alpharogroup.email.utils.EmailExtensions;
 
+/**
+ * The unit test class for the class {@link ByteArrayDataSource}.
+ */
 public class ByteArrayDataSourceTest
 {
 
-	public static String getString(final DataHandler dataHandler) throws IOException
-	{
-		if (dataHandler != null)
-		{
-			final InputStream input = dataHandler.getDataSource().getInputStream();
-			final byte[] data = ReadFileExtensions.toByteArray(input);
-			return Base64.encodeBase64String(data);
-		}
-		return "";
-	}
-
+	/**
+	 * Test method for the constructor of {@link ByteArrayDataSource}.
+	 *
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 */
 	@Test
 	public void testByteArrayDataSource() throws IOException
 	{
@@ -59,7 +55,7 @@ public class ByteArrayDataSourceTest
 		final DataSource dataSource = new ByteArrayDataSource(expected.getBytes(),
 			Mimetypes.TEXT_PLAIN.getMimetype());
 		final DataHandler dataHandler = new DataHandler(dataSource);
-		final String rawString = getString(dataHandler);
+		final String rawString = EmailExtensions.getString(dataHandler);
 		final String actual = new String(Base64.decodeBase64(rawString));
 		assertEquals("Not expected content", expected, actual);
 	}

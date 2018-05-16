@@ -24,8 +24,12 @@
  */
 package de.alpharogroup.email.utils;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
+import java.util.Base64;
 
+import javax.activation.DataHandler;
 import javax.mail.Address;
 import javax.mail.Message;
 import javax.mail.MessagingException;
@@ -36,6 +40,7 @@ import org.apache.log4j.Logger;
 
 import de.alpharogroup.email.messages.EmailConstants;
 import de.alpharogroup.email.messages.EmailMessage;
+import de.alpharogroup.file.read.ReadFileExtensions;
 import de.alpharogroup.string.StringExtensions;
 import lombok.experimental.ExtensionMethod;
 
@@ -381,5 +386,24 @@ public class EmailExtensions
 			isValid = false;
 		}
 		return isValid;
+	}
+
+	/**
+	 * Gets the string from the given {@link DataHandler}.
+	 *
+	 * @param dataHandler the data handler
+	 * @return the string
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 */
+	public static String getString(final DataHandler dataHandler) throws IOException
+	{
+		if (dataHandler != null)
+		{
+			final InputStream input = dataHandler.getDataSource().getInputStream();
+			final byte[] data = ReadFileExtensions.toByteArray(input);
+			// TODO check if the output is the same...
+			return Base64.getEncoder().encodeToString(data);
+		}
+		return "";
 	}
 }
