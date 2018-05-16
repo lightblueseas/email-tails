@@ -1,12 +1,20 @@
 ## Change log
 ----------------------
 
-Version 4.17.0-SNAPSHOT
+Version 4.17
 -------------
+
+CHANGED:
+
+- update of parent version to 3.11
+- update of resourcebundle-core version to 2.21
+- removed unneeded .0 at the end of version
+- update of silly-collections version to 4.28.0
+- update of test-objects version to 4.24.0
+- update of file-worker version to 4.20
 
 Version 4.16.0
 -------------
-
 
 ADDED:
  

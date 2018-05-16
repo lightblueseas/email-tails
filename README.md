@@ -20,7 +20,7 @@ Add the following maven dependency to your project `pom.xml` if you want to impo
 Than you can add the dependency to your dependencies:
 
 		<!-- EMAIL-TAILS version -->
-		<email-tails.version>4.15.0</email-tails.version>
+		<email-tails.version>4.17</email-tails.version>
 
 		<dependencies>
 			...
