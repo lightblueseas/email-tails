@@ -4,6 +4,14 @@
 Version 4.18-SNAPSHOT
 -------------
 
+CHANGED:
+
+- update of parent version to 3.12
+- update of silly-collections version to 4.31
+- update of test-objects version to 4.28
+- update of file-worker version to 4.22
+- update of xstream version to 1.4.10 
+
 Version 4.17
 -------------
 
