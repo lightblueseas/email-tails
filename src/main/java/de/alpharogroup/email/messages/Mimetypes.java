@@ -36,6 +36,24 @@ import eu.medsea.mimeutil.MimeUtil2;
 public enum Mimetypes
 {
 
+	/** The application octet. */
+	APPLICATION_OCTET("application/octet-stream"),
+
+	/** The application pdf. */
+	APPLICATION_PDF("application/pdf"),
+
+	/** The application rtf. */
+	APPLICATION_RTF("application/rtf"),
+
+	/** The eml. */
+	EML("message/rfc822"),
+
+	/** The image gif. */
+	IMAGE_GIF("image/gif"),
+
+	/** The image ief. */
+	IMAGE_IEF("image/ief"),
+
 	/** The image jpeg. */
 	IMAGE_JPEG("image/jpeg"),
 
@@ -45,14 +63,8 @@ public enum Mimetypes
 	/** The image png. */
 	IMAGE_PNG("image/png"),
 
-	/** The image gif. */
-	IMAGE_GIF("image/gif"),
-
 	/** The image tiff. */
 	IMAGE_TIFF("image/tiff"),
-
-	/** The image ief. */
-	IMAGE_IEF("image/ief"),
 
 	/** The image x icon. */
 	IMAGE_X_ICON("image/x-icon"),
@@ -63,8 +75,8 @@ public enum Mimetypes
 	/** The text csv. */
 	TEXT_CSV("text/csv"),
 
-	/** The eml. */
-	EML("message/rfc822"),
+	/** The text html. */
+	TEXT_HTML("text/html"),
 
 	/** The text ics. */
 	TEXT_ICS("text/calendar"),
@@ -72,20 +84,8 @@ public enum Mimetypes
 	/** The text plain. */
 	TEXT_PLAIN("text/plain"),
 
-	/** The text html. */
-	TEXT_HTML("text/html"),
-
 	/** The text xml. */
-	TEXT_XML("text/xml"),
-
-	/** The application pdf. */
-	APPLICATION_PDF("application/pdf"),
-
-	/** The application rtf. */
-	APPLICATION_RTF("application/rtf"),
-
-	/** The application octet. */
-	APPLICATION_OCTET("application/octet-stream");
+	TEXT_XML("text/xml");
 
 	/**
 	 * Gets the mime type from the given File. It make use of the library mime-util

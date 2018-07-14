@@ -30,11 +30,65 @@ package de.alpharogroup.email.messages;
 public enum HeaderNames
 {
 
-	/** The header name 'Return-Path'. */
-	RETURN_PATH("Return-Path"),
+	/** The header name 'Bcc'. */
+	BCC("Bcc"),
+
+	/** The header name 'Cc'. */
+	CC("Cc"),
+
+	/** The header name ':'. */
+	COLON(":"),
+
+	/** The header name 'Comments'. */
+	COMMENTS("Comments"),
+
+	/** The header name ''. */
+	CONTENT_LENGTH("Content-Length"),
+
+	/** The header name 'Content-MD5'. */
+	CONTENT_MD5("Content-MD5"),
+
+	/** The header name 'Content-Transfer-Encoding'. */
+	CONTENT_TRANSFER_ENCODING("Content-Transfer-Encoding"),
+
+	/** The header name 'Content-Type'. */
+	CONTENT_TYPE("Content-Type"),
+
+	/** The header name 'Date'. */
+	DATE("Date"),
+
+	/** The header name 'Errors-To'. */
+	ERRORS_TO("Errors-To"),
+
+	/** The header name 'From'. */
+	FROM("From"),
+
+	/** The header name 'In-Reply-To'. */
+	IN_REPLY_TO("In-Reply-To"),
+
+	/** The header name 'Keywords'. */
+	KEYWORDS("Keywords"),
+
+	/** The header name 'Message-Id'. */
+	MESSAGE_ID("Message-Id"),
+
+	/** The header name 'MIME-Version'. */
+	MIME_VERSION("MIME-Version"),
 
 	/** The header name 'Received'. */
 	RECEIVED("Received"),
+
+	/** The header name 'References'. */
+	REFERENCES("References"),
+
+	/** The header name 'Reply-To'. */
+	REPLY_TO("Reply-To"),
+
+	/** The header name 'Resent-Bcc'. */
+	RESENT_BCC("Resent-Bcc"),
+
+	/** The header name 'Resent-Cc'. */
+	RESENT_CC("Resent-Cc"),
 
 	/** The header name 'Resent-Date'. */
 	RESENT_DATE("Resent-Date"),
@@ -42,83 +96,29 @@ public enum HeaderNames
 	/** The header name 'Resent-From'. */
 	RESENT_FROM("Resent-From"),
 
+	/** The header name 'Resent-Message-Id'. */
+	RESENT_MESSAGE_ID("Resent-Message-Id"),
+
 	/** The header name 'Resent-Sender'. */
 	RESENT_SENDER("Resent-Sender"),
 
 	/** The header name 'Resent-To'. */
 	RESENT_TO("Resent-To"),
 
-	/** The header name 'Resent-Cc'. */
-	RESENT_CC("Resent-Cc"),
-
-	/** The header name 'Resent-Bcc'. */
-	RESENT_BCC("Resent-Bcc"),
-
-	/** The header name 'Resent-Message-Id'. */
-	RESENT_MESSAGE_ID("Resent-Message-Id"),
-
-	/** The header name 'Date'. */
-	DATE("Date"),
-
-	/** The header name 'From'. */
-	FROM("From"),
+	/** The header name 'Return-Path'. */
+	RETURN_PATH("Return-Path"),
 
 	/** The header name 'Sender'. */
 	SENDER("Sender"),
 
-	/** The header name 'Reply-To'. */
-	REPLY_TO("Reply-To"),
-
-	/** The header name 'To'. */
-	TO("To"),
-
-	/** The header name 'Cc'. */
-	CC("Cc"),
-
-	/** The header name 'Bcc'. */
-	BCC("Bcc"),
-
-	/** The header name 'Message-Id'. */
-	MESSAGE_ID("Message-Id"),
-
-	/** The header name 'In-Reply-To'. */
-	IN_REPLY_TO("In-Reply-To"),
-
-	/** The header name 'References'. */
-	REFERENCES("References"),
+	/** The header name 'Status'. */
+	STATUS("Status"),
 
 	/** The header name 'Subject'. */
 	SUBJECT("Subject"),
 
-	/** The header name 'Comments'. */
-	COMMENTS("Comments"),
-
-	/** The header name 'Keywords'. */
-	KEYWORDS("Keywords"),
-
-	/** The header name 'Errors-To'. */
-	ERRORS_TO("Errors-To"),
-
-	/** The header name 'MIME-Version'. */
-	MIME_VERSION("MIME-Version"),
-
-	/** The header name 'Content-Type'. */
-	CONTENT_TYPE("Content-Type"),
-
-	/** The header name 'Content-Transfer-Encoding'. */
-	CONTENT_TRANSFER_ENCODING("Content-Transfer-Encoding"),
-
-	/** The header name 'Content-MD5'. */
-	CONTENT_MD5("Content-MD5"),
-
-	/** The header name ':'. */
-	COLON(":"),
-
-	/** The header name ''. */
-	CONTENT_LENGTH("Content-Length"),
-
-	/** The header name 'Status'. */
-	STATUS("Status");
+	/** The header name 'To'. */
+	TO("To");
 
 	/** The header name. */
 	private final String headerName;

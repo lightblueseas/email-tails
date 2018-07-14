@@ -53,6 +53,8 @@ public class SendEmail implements SendMail
 {
 
 
+	private Authenticator authenticator;
+
 	/** The debug. */
 	@Getter
 	private boolean debug;
@@ -62,8 +64,6 @@ public class SendEmail implements SendMail
 
 	/** The Session-object. */
 	private Session session;
-
-	private Authenticator authenticator;
 
 	/**
 	 * The Constructor.

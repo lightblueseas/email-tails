@@ -36,13 +36,13 @@ public abstract class EmailConstants
 	/** Constant for the charset 'UTF-8'. */
 	public static final String CHARSET_UTF8 = "UTF-8";
 
-	/** Constant for the name from the properties-file. */
-	public static final String PROPERTIES_FILENAME = "mail.properties";
-
 	/** Constant for the mimetype text/html. */
 	public static final String MIMETYPE_TEXT_HTML = "text/html";
 
 	/** Constant for the mimetype text/plain. */
 	public static final String MIMETYPE_TEXT_PLAIN = "text/plain";
+
+	/** Constant for the name from the properties-file. */
+	public static final String PROPERTIES_FILENAME = "mail.properties";
 
 }
