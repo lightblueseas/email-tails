@@ -129,7 +129,8 @@ public class SendEmail implements SendMail
 	 */
 	private void loadProperties()
 	{
-		properties = PropertiesFileExtensions.loadProperties(this, EmailConstants.PROPERTIES_FILENAME);
+		properties = PropertiesFileExtensions.loadProperties(this,
+			EmailConstants.PROPERTIES_FILENAME);
 	}
 
 	/**

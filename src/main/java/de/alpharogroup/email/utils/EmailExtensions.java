@@ -192,6 +192,27 @@ public class EmailExtensions
 	}
 
 	/**
+	 * Gets the string from the given {@link DataHandler}.
+	 *
+	 * @param dataHandler
+	 *            the data handler
+	 * @return the string
+	 * @throws IOException
+	 *             Signals that an I/O exception has occurred.
+	 */
+	public static String getString(final DataHandler dataHandler) throws IOException
+	{
+		if (dataHandler != null)
+		{
+			final InputStream input = dataHandler.getDataSource().getInputStream();
+			final byte[] data = ReadFileExtensions.toByteArray(input);
+			// TODO check if the output is the same...
+			return Base64.getEncoder().encodeToString(data);
+		}
+		return "";
+	}
+
+	/**
 	 * Creates an Address from the given the email address as String object.
 	 *
 	 * @param address
@@ -266,6 +287,7 @@ public class EmailExtensions
 		}
 		return internetAdress;
 	}
+
 
 	/**
 	 * Sets the from to the email message.
@@ -364,7 +386,6 @@ public class EmailExtensions
 		return emailMessage;
 	}
 
-
 	/**
 	 * Validate the given email address.
 	 *
@@ -386,24 +407,5 @@ public class EmailExtensions
 			isValid = false;
 		}
 		return isValid;
-	}
-
-	/**
-	 * Gets the string from the given {@link DataHandler}.
-	 *
-	 * @param dataHandler the data handler
-	 * @return the string
-	 * @throws IOException Signals that an I/O exception has occurred.
-	 */
-	public static String getString(final DataHandler dataHandler) throws IOException
-	{
-		if (dataHandler != null)
-		{
-			final InputStream input = dataHandler.getDataSource().getInputStream();
-			final byte[] data = ReadFileExtensions.toByteArray(input);
-			// TODO check if the output is the same...
-			return Base64.getEncoder().encodeToString(data);
-		}
-		return "";
 	}
 }

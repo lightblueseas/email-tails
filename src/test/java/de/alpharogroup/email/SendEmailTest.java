@@ -69,7 +69,8 @@ public class SendEmailTest
 	/**
 	 * Sets the up.
 	 *
-	 * @throws Exception the exception
+	 * @throws Exception
+	 *             the exception
 	 */
 	@BeforeMethod
 	public void setUp() throws Exception
@@ -81,7 +82,8 @@ public class SendEmailTest
 	/**
 	 * Tear down.
 	 *
-	 * @throws Exception the exception
+	 * @throws Exception
+	 *             the exception
 	 */
 	@AfterMethod
 	public void tearDown() throws Exception

@@ -46,7 +46,8 @@ public class ByteArrayDataSourceTest
 	/**
 	 * Test method for the constructor of {@link ByteArrayDataSource}.
 	 *
-	 * @throws IOException Signals that an I/O exception has occurred.
+	 * @throws IOException
+	 *             Signals that an I/O exception has occurred.
 	 */
 	@Test
 	public void testByteArrayDataSource() throws IOException
