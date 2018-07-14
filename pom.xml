@@ -11,7 +11,7 @@
 	</parent>
 
 	<artifactId>email-tails</artifactId>
-	<version>4.18</version>
+	<version>5-SNAPSHOT</version>
 
 	<name>${project.artifactId}</name>
 
