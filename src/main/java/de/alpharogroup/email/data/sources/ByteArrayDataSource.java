@@ -39,13 +39,13 @@ import lombok.Getter;
 public class ByteArrayDataSource implements DataSource
 {
 
-	/** The OutputStream for the Bytearray. */
-	@Getter
-	private final ByteArrayOutputStream outputStream;
-
 	/** The contenttype. */
 	@Getter
 	private final String contentType;
+
+	/** The OutputStream for the Bytearray. */
+	@Getter
+	private final ByteArrayOutputStream outputStream;
 
 	/**
 	 * Constructor with the bytearray and the contenttype.

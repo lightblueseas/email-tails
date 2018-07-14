@@ -1,6 +1,18 @@
 ## Change log
 ----------------------
 
+Version 4.18
+-------------
+
+CHANGED:
+
+- update of parent version to 4
+- update of silly-collections version to 4.31
+- update of test-objects version to 4.28
+- update of file-worker version to 4.22
+- update of xstream version to 1.4.10 
+- update of resourcebundle-core version to 2.22
+
 Version 4.17
 -------------
 

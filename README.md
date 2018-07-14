@@ -3,6 +3,7 @@
 [![Build Status](https://travis-ci.org/lightblueseas/email-tails.svg?branch=master)](https://travis-ci.org/lightblueseas/email-tails)
 [![Maven Central](https://maven-badges.herokuapp.com/maven-central/de.alpharogroup/email-tails/badge.svg)](https://maven-badges.herokuapp.com/maven-central/de.alpharogroup/email-tails)
 [![Javadocs](http://www.javadoc.io/badge/de.alpharogroup/email-tails.svg)](http://www.javadoc.io/doc/de.alpharogroup/email-tails)
+[![MIT license](http://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat)](http://opensource.org/licenses/MIT)
 
 Project for send emails with attachments. 
 
@@ -20,7 +21,7 @@ Add the following maven dependency to your project `pom.xml` if you want to impo
 Than you can add the dependency to your dependencies:
 
 		<!-- EMAIL-TAILS version -->
-		<email-tails.version>4.17</email-tails.version>
+		<email-tails.version>4.18</email-tails.version>
 
 		<dependencies>
 			...
