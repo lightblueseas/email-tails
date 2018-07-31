@@ -4,6 +4,11 @@
 Version 5-SNAPSHOT
 -------------
 
+CHANGED:
+
+- update of parent version to 4.1
+- update of silly-collections version to 4.33
+
 Version 4.18
 -------------
 
