@@ -6,8 +6,12 @@ Version 5-SNAPSHOT
 
 CHANGED:
 
-- update of parent version to 4.1
-- update of silly-collections version to 4.33
+- update of parent version to 4.5
+- update of silly-collections version to 5
+- update of test-objects version to 5
+- update of file-worker version to 5.0.1
+- update of net-extensions version to 5
+- update of resourcebundle-core version to 3.0.1
 
 Version 4.18
 -------------
