@@ -24,6 +24,7 @@
  */
 package de.alpharogroup.email.send;
 
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -129,8 +130,25 @@ public class SendEmail implements SendMail
 	 */
 	private void loadProperties()
 	{
-		properties = PropertiesFileExtensions.loadProperties(this,
-			EmailConstants.PROPERTIES_FILENAME);
+		loadPropertiesQueitly();
+	}
+
+	/**
+	 * On load properties.
+	 *
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 */
+	private void loadPropertiesQueitly()
+	{
+		try
+		{
+			properties = PropertiesFileExtensions.loadProperties(this,
+				EmailConstants.PROPERTIES_FILENAME);
+		}
+		catch (IOException e)
+		{
+			e.printStackTrace();
+		}
 	}
 
 	/**
