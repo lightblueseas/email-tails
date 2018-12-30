@@ -36,8 +36,6 @@ import javax.mail.MessagingException;
 import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
 
-import org.apache.log4j.Logger;
-
 import de.alpharogroup.email.messages.EmailConstants;
 import de.alpharogroup.email.messages.EmailMessage;
 import de.alpharogroup.file.read.ReadFileExtensions;
@@ -52,9 +50,6 @@ import lombok.experimental.ExtensionMethod;
 public class EmailExtensions
 {
 
-	/** The Constant logger. */
-	private static final Logger logger = Logger.getLogger(EmailExtensions.class.getName());
-
 	/**
 	 * Adds a 'to' recipient to the email message.
 	 *
@@ -67,81 +62,32 @@ public class EmailExtensions
 	 * @param emailMessage
 	 *            the email message
 	 * @return the email message
+	 * @throws UnsupportedEncodingException
+	 *             is thrown if the encoding not supported
+	 * @throws MessagingException
+	 *             is thrown if the underlying implementation does not support modification of
+	 *             existing values
 	 */
 	public static EmailMessage addToRecipientToEmailMessage(final String recipientEmail,
 		final String recipientPersonal, final String recipientCharset,
-		final EmailMessage emailMessage)
+		final EmailMessage emailMessage) throws UnsupportedEncodingException, MessagingException
 	{
 
 		// Try to create the recipient Address
-		Address recipientAddress = null;
-		try
-		{
-			recipientAddress = EmailExtensions.newAddress(recipientEmail, recipientPersonal,
-				recipientCharset);
+		Address recipientAddress = EmailExtensions.newAddress(recipientEmail, recipientPersonal,
+			recipientCharset);
 
-		}
-		catch (final AddressException e2)
-		{
-			logger.error(
-				"AddressException when tryin to create the recipient Address:" + recipientEmail,
-				e2);
-			e2.printStackTrace();
-		}
-		catch (final UnsupportedEncodingException e2)
-		{
-			logger.error("UnsupportedEncodingException when tryin to create the recipient Address:"
-				+ recipientEmail, e2);
-			e2.printStackTrace();
-		}
 
 		// Set recipient
 		if (null != recipientAddress)
 		{
-			try
-			{
-				emailMessage.addTo(recipientAddress);
-			}
-			catch (final MessagingException e)
-			{
-				try
-				{
-					emailMessage.setRecipients(Message.RecipientType.TO, recipientEmail);
-				}
-				catch (final AddressException e1)
-				{
-					logger.error(
-						"AddressException when tryin to set the To Address:" + recipientEmail, e1);
-					e1.printStackTrace();
-				}
-				catch (final MessagingException e1)
-				{
-					logger.error(
-						"MessagingException when tryin to set the To Address:" + recipientEmail,
-						e1);
-					e1.printStackTrace();
-				}
-				e.printStackTrace();
-			}
+
+			emailMessage.addTo(recipientAddress);
 		}
 		else
 		{
-			try
-			{
-				emailMessage.setRecipients(Message.RecipientType.TO, recipientEmail);
-			}
-			catch (final AddressException e1)
-			{
-				logger.error("AddressException when tryin to set the To Address:" + recipientEmail,
-					e1);
-				e1.printStackTrace();
-			}
-			catch (final MessagingException e1)
-			{
-				logger.error(
-					"MessagingException when tryin to set the To Address:" + recipientEmail, e1);
-				e1.printStackTrace();
-			}
+			emailMessage.setRecipients(Message.RecipientType.TO, recipientEmail);
+
 		}
 		return emailMessage;
 	}
@@ -167,7 +113,8 @@ public class EmailExtensions
 	 * @return 's the encoding or null if its nothing found.
 	 *
 	 * @throws MessagingException
-	 *             if an error occurs.
+	 *             is thrown if the underlying implementation does not support modification of
+	 *             existing values
 	 */
 	public static String getCharsetFromContentType(final String type) throws MessagingException
 	{
@@ -220,10 +167,10 @@ public class EmailExtensions
 	 *
 	 * @return The created InternetAddress-object from the given address.
 	 *
-	 * @throws AddressException
-	 *             if an error occurs.
 	 * @throws UnsupportedEncodingException
-	 *             if an error occurs.
+	 *             is thrown if the encoding not supported
+	 * @throws AddressException
+	 *             is thrown if the parse failed
 	 */
 	public static Address newAddress(final String address)
 		throws AddressException, UnsupportedEncodingException
@@ -242,9 +189,9 @@ public class EmailExtensions
 	 * @return The created Adress-object from the given address and personal name.
 	 *
 	 * @throws UnsupportedEncodingException
-	 *             the unsupported encoding exception
+	 *             is thrown if the encoding not supported
 	 * @throws AddressException
-	 *             the address exception
+	 *             is thrown if the parse failed
 	 */
 	public static Address newAddress(final String emailAddress, final String personal)
 		throws AddressException, UnsupportedEncodingException
@@ -265,9 +212,9 @@ public class EmailExtensions
 	 * @return The created InternetAddress-object from the given address and personal name.
 	 *
 	 * @throws AddressException
-	 *             if an error occurs.
+	 *             is thrown if the parse failed
 	 * @throws UnsupportedEncodingException
-	 *             if an error occurs.
+	 *             is thrown if the encoding not supported
 	 */
 	public static Address newAddress(final String address, String personal, final String charset)
 		throws AddressException, UnsupportedEncodingException
@@ -301,87 +248,28 @@ public class EmailExtensions
 	 * @param emailMessage
 	 *            the email message
 	 * @return the email message
+	 * @throws UnsupportedEncodingException
+	 *             is thrown if the encoding not supported
+	 * @throws MessagingException
+	 *             is thrown if the underlying implementation does not support modification of
+	 *             existing values
 	 */
 	public static EmailMessage setFromToEmailMessage(final String senderEmail,
-		final String senderPersonal, final String senderCharset, final EmailMessage emailMessage)
+		final String senderPersonal, final String senderCharset, final EmailMessage emailMessage) throws UnsupportedEncodingException, MessagingException
 	{
 		// Try to create the sender Address
 		Address senderAddress = null;
-		try
-		{
-			senderAddress = EmailExtensions.newAddress(senderEmail, senderPersonal, senderCharset);
+		senderAddress = EmailExtensions.newAddress(senderEmail, senderPersonal, senderCharset);
 
-		}
-		catch (final AddressException e2)
-		{
-			logger.error("AddressException when tryin to create the sender Address:" + senderEmail,
-				e2);
-			e2.printStackTrace();
-		}
-		catch (final UnsupportedEncodingException e2)
-		{
-			logger.error("UnsupportedEncodingException when tryin to create the sender Address:"
-				+ senderEmail, e2);
-			e2.printStackTrace();
-		}
+
 		// Set sender
 		if (null != senderAddress)
 		{
-			try
-			{
-				emailMessage.setFrom(senderAddress);
-			}
-			catch (final MessagingException e)
-			{
-				try
-				{
-					emailMessage.setFrom(senderEmail);
-				}
-				catch (final AddressException e1)
-				{
-					logger.error(
-						"AddressException when tryin to set the From Address:" + senderEmail, e1);
-					e1.printStackTrace();
-				}
-				catch (final UnsupportedEncodingException e1)
-				{
-					logger.error("UnsupportedEncodingException when tryin to set the From Address:"
-						+ senderEmail, e1);
-					e1.printStackTrace();
-				}
-				catch (final MessagingException e1)
-				{
-					logger.error(
-						"MessagingException when tryin to set the From Address:" + senderEmail, e1);
-					e1.printStackTrace();
-				}
-				e.printStackTrace();
-			}
+			emailMessage.setFrom(senderAddress);
 		}
 		else
 		{
-			try
-			{
-				emailMessage.setFrom(senderEmail);
-			}
-			catch (final AddressException e1)
-			{
-				logger.error("AddressException when tryin to set the From Address:" + senderEmail,
-					e1);
-				e1.printStackTrace();
-			}
-			catch (final UnsupportedEncodingException e1)
-			{
-				logger.error("UnsupportedEncodingException when tryin to set the From Address:"
-					+ senderEmail, e1);
-				e1.printStackTrace();
-			}
-			catch (final MessagingException e1)
-			{
-				logger.error("MessagingException when tryin to set the From Address:" + senderEmail,
-					e1);
-				e1.printStackTrace();
-			}
+			emailMessage.setFrom(senderEmail);
 		}
 		return emailMessage;
 	}

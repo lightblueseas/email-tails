@@ -59,7 +59,8 @@ public class EmailMessageWithAttachments
 	 *            The EmailMessage.
 	 *
 	 * @throws MessagingException
-	 *             if an error occurs.
+	 *             is thrown if the underlying implementation does not support modification of
+	 *             existing values
 	 */
 	public EmailMessageWithAttachments(final EmailMessage emailMessage) throws MessagingException
 	{
@@ -75,7 +76,8 @@ public class EmailMessageWithAttachments
 	 *            The BodyPart to add to the EmailMessage.
 	 *
 	 * @throws MessagingException
-	 *             if an error occurs.
+	 *             is thrown if the underlying implementation does not support modification of
+	 *             existing values
 	 */
 	public void addAttachment(final BodyPart part) throws MessagingException
 	{
@@ -93,7 +95,8 @@ public class EmailMessageWithAttachments
 	 *            The mimetype.
 	 *
 	 * @throws MessagingException
-	 *             if an error occurs.
+	 *             is thrown if the underlying implementation does not support modification of
+	 *             existing values
 	 */
 	public void addAttachment(final byte[] content, final String filename, final String mimetype)
 		throws MessagingException
@@ -112,7 +115,8 @@ public class EmailMessageWithAttachments
 	 *            The new Filename for the attachment.
 	 *
 	 * @throws MessagingException
-	 *             if an error occurs.
+	 *             is thrown if the underlying implementation does not support modification of
+	 *             existing values
 	 */
 	public void addAttachment(final DataHandler handler, final String filename)
 		throws MessagingException
@@ -130,7 +134,8 @@ public class EmailMessageWithAttachments
 	 *            The file to add to the EmailMessage.
 	 *
 	 * @throws MessagingException
-	 *             if an error occurs.
+	 *             is thrown if the underlying implementation does not support modification of
+	 *             existing values
 	 */
 	public void addAttachment(final File file) throws MessagingException
 	{
@@ -149,7 +154,8 @@ public class EmailMessageWithAttachments
 	 *            The new Filename for the attachment.
 	 *
 	 * @throws MessagingException
-	 *             if an error occurs.
+	 *             is thrown if the underlying implementation does not support modification of
+	 *             existing values
 	 */
 	public void addAttachment(final File file, final String newFilename) throws MessagingException
 	{
@@ -165,7 +171,8 @@ public class EmailMessageWithAttachments
 	 * @return 's the MimeMultipart from the EmailAttachments.
 	 *
 	 * @throws MessagingException
-	 *             if an error occurs.
+	 *             is thrown if the underlying implementation does not support modification of
+	 *             existing values
 	 */
 	public synchronized MimeMultipart getMimeMultiPart() throws MessagingException
 	{

@@ -80,7 +80,8 @@ public class EmailMessage extends MimeMessage implements Serializable
 	 * @param internetAddress
 	 *            The InternetAddress-object.
 	 * @throws MessagingException
-	 *             if an error occurs.
+	 *             is thrown if the underlying implementation does not support modification of
+	 *             existing values
 	 */
 	public void addBcc(final Address internetAddress) throws MessagingException
 	{
@@ -93,7 +94,8 @@ public class EmailMessage extends MimeMessage implements Serializable
 	 * @param internetAddress
 	 *            The InternetAddress-object.
 	 * @throws MessagingException
-	 *             if an error occurs.
+	 *             is thrown if the underlying implementation does not support modification of
+	 *             existing values
 	 */
 	public void addCc(final Address internetAddress) throws MessagingException
 	{
@@ -106,7 +108,8 @@ public class EmailMessage extends MimeMessage implements Serializable
 	 * @param internetAddress
 	 *            The InternetAddress-object.
 	 * @throws MessagingException
-	 *             if an error occurs.
+	 *             is thrown if the underlying implementation does not support modification of
+	 *             existing values
 	 */
 	public void addFrom(final Address internetAddress) throws MessagingException
 	{
@@ -119,7 +122,8 @@ public class EmailMessage extends MimeMessage implements Serializable
 	 * @param internetAddress
 	 *            The InternetAddress-object.
 	 * @throws MessagingException
-	 *             if an error occurs.
+	 *             is thrown if the underlying implementation does not support modification of
+	 *             existing values
 	 */
 	public void addTo(final Address internetAddress) throws MessagingException
 	{
@@ -295,7 +299,8 @@ public class EmailMessage extends MimeMessage implements Serializable
 	 * @param type
 	 *            the type
 	 * @throws MessagingException
-	 *             the messaging exception
+	 *             is thrown if the underlying implementation does not support modification of
+	 *             existing values
 	 *
 	 * @see javax.mail.Part#setContent(java.lang.Object, java.lang.String)
 	 */
@@ -314,9 +319,10 @@ public class EmailMessage extends MimeMessage implements Serializable
 	 * @throws AddressException
 	 *             the address exception
 	 * @throws UnsupportedEncodingException
-	 *             the unsupported encoding exception
+	 *             is thrown if the encoding not supported
 	 * @throws MessagingException
-	 *             the messaging exception
+	 *             is thrown if the underlying implementation does not support modification of
+	 *             existing values
 	 */
 	public void setFrom(final String senderEmail)
 		throws AddressException, UnsupportedEncodingException, MessagingException
@@ -331,7 +337,8 @@ public class EmailMessage extends MimeMessage implements Serializable
 	 * @param subject
 	 *            the new subject
 	 * @throws MessagingException
-	 *             the messaging exception
+	 *             is thrown if the underlying implementation does not support modification of
+	 *             existing values
 	 *
 	 * @see javax.mail.Message#setSubject(java.lang.String)
 	 */
@@ -354,7 +361,8 @@ public class EmailMessage extends MimeMessage implements Serializable
 	 * @param charset
 	 *            the charset
 	 * @throws MessagingException
-	 *             the messaging exception
+	 *             is thrown if the underlying implementation does not support modification of
+	 *             existing values
 	 *
 	 * @see javax.mail.internet.MimeMessage#setSubject(java.lang.String, java.lang.String)
 	 */
@@ -370,7 +378,8 @@ public class EmailMessage extends MimeMessage implements Serializable
 	 * @param content
 	 *            the new utf8 content
 	 * @throws MessagingException
-	 *             the messaging exception
+	 *             is thrown if the underlying implementation does not support modification of
+	 *             existing values
 	 *
 	 * @see javax.mail.Part#setContent(java.lang.Object, java.lang.String)
 	 */

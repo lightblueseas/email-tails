@@ -61,9 +61,10 @@ public interface SendMail
 	 * @throws AddressException
 	 *             the address exception
 	 * @throws UnsupportedEncodingException
-	 *             if an error occurs by encoding.
+	 *             is thrown if the encoding not supported
 	 * @throws MessagingException
-	 *             if an error occurs by sending the message.
+	 *             is thrown if the underlying implementation does not support modification of
+	 *             existing values
 	 */
 	String sendEmail(final String to, final String from, final String subject, final String message)
 		throws AddressException, UnsupportedEncodingException, MessagingException;
@@ -77,7 +78,8 @@ public interface SendMail
 	 * @return 's the messageid.
 	 *
 	 * @throws MessagingException
-	 *             if an error occurs.
+	 *             is thrown if the underlying implementation does not support modification of
+	 *             existing values
 	 */
 	String sendEmailMessage(final EmailMessage emailMessage) throws MessagingException;
 
@@ -88,7 +90,8 @@ public interface SendMail
 	 *            the email messages
 	 * @return the collection
 	 * @throws MessagingException
-	 *             the messaging exception
+	 *             is thrown if the underlying implementation does not support modification of
+	 *             existing values
 	 */
 	Collection<String> sendEmailMessages(final Collection<EmailMessage> emailMessages)
 		throws MessagingException;
@@ -100,7 +103,8 @@ public interface SendMail
 	 *            the email attachments
 	 * @return the collection
 	 * @throws MessagingException
-	 *             if an error occurs.
+	 *             is thrown if the underlying implementation does not support modification of
+	 *             existing values
 	 */
 	Collection<String> sendEmailMessagesWithAtachments(
 		final Collection<EmailMessageWithAttachments> emailAttachments) throws MessagingException;
@@ -114,7 +118,8 @@ public interface SendMail
 	 * @return 's the messageid.
 	 *
 	 * @throws MessagingException
-	 *             if an error occurs.
+	 *             is thrown if the underlying implementation does not support modification of
+	 *             existing values
 	 */
 	String sendEmailMessageWithAttachments(final EmailMessageWithAttachments emailAttachments)
 		throws MessagingException;
