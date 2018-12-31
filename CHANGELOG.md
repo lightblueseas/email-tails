@@ -1,8 +1,12 @@
 ## Change log
 ----------------------
 
-Version 5.1-SNAPSHOT
+Version 5.0.1
 -------------
+
+CHANGED:
+
+- excluded logging dependencies
 
 Version 5
 -------------
