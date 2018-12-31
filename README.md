@@ -1,6 +1,6 @@
 # Overview
 
-[![Build Status](https://travis-ci.org/lightblueseas/email-tails.svg?branch=master)](https://travis-ci.org/lightblueseas/email-tails)
+[![Build Status](https://travis-ci.org/lightblueseas/email-tails.svg?branch=develop)](https://travis-ci.org/lightblueseas/email-tails)
 [![Maven Central](https://maven-badges.herokuapp.com/maven-central/de.alpharogroup/email-tails/badge.svg)](https://maven-badges.herokuapp.com/maven-central/de.alpharogroup/email-tails)
 [![Javadocs](http://www.javadoc.io/badge/de.alpharogroup/email-tails.svg)](http://www.javadoc.io/doc/de.alpharogroup/email-tails)
 [![MIT license](http://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat)](http://opensource.org/licenses/MIT)
@@ -23,7 +23,7 @@ Than you can add the dependency to your dependencies:
 	<properties>
 			...
 		<!-- EMAIL-TAILS version -->
-		<email-tails.version>4.18</email-tails.version>
+		<email-tails.version>5.0.1</email-tails.version>
 			...
 	</properties>
 			...

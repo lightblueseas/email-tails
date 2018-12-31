@@ -11,7 +11,7 @@
 	</parent>
 
 	<artifactId>email-tails</artifactId>
-	<version>5</version>
+	<version>5.0.1</version>
 
 	<name>${project.artifactId}</name>
 
@@ -150,6 +150,10 @@
 				<exclusion>
 					<groupId>log4j</groupId>
 					<artifactId>log4j</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>org.slf4j</groupId>
+					<artifactId>slf4j-api</artifactId>
 				</exclusion>
 			</exclusions>
 		</dependency>
