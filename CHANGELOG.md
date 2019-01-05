@@ -1,8 +1,13 @@
 ## Change log
 ----------------------
 
-Version 5.1-SNAPSHOT
+Version 5.0.2
 -------------
+
+CHANGED:
+
+- update of file-worker version to 5.0.2
+- update of xstream version to 1.4.11.1
 
 Version 5.0.1
 -------------
