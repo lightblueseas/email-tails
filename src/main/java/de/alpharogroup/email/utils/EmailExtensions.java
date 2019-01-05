@@ -255,7 +255,8 @@ public class EmailExtensions
 	 *             existing values
 	 */
 	public static EmailMessage setFromToEmailMessage(final String senderEmail,
-		final String senderPersonal, final String senderCharset, final EmailMessage emailMessage) throws UnsupportedEncodingException, MessagingException
+		final String senderPersonal, final String senderCharset, final EmailMessage emailMessage)
+		throws UnsupportedEncodingException, MessagingException
 	{
 		// Try to create the sender Address
 		Address senderAddress = null;
