@@ -38,7 +38,17 @@ public class AlexProgramm
 	 */
 	public static void main(final String... args)
 	{
-		System.out.println("Hallo alex!");
+//		System.out.println("Hallo alex!");
+		int ergebnis = addiere(1, 2);
+		System.err.println("ergebnis:"+ergebnis);
+
+		ergebnis = addiere(432, 589);
+		System.err.println("ergebnis:"+ergebnis);
+	}
+
+	static int addiere(int erste, int andere) {
+		int ergebnis = erste + andere;
+		return ergebnis;
 	}
 
 }
