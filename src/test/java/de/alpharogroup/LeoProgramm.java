@@ -38,7 +38,17 @@ public class LeoProgramm
 	 */
 	public static void main(final String... args)
 	{
-		System.out.println("Hallo leo! blue lu");
+//		System.out.println("Hallo leo! blue lu");
+		int ergebnis = addiere(1, 2);
+		System.err.println("ergebnis:"+ergebnis);
+
+		ergebnis = addiere(432, 589);
+		System.err.println("ergebnis:"+ergebnis);
+	}
+
+	static int addiere(int eineZahl, int andereZahl) {
+		int ergebnis = eineZahl + andereZahl;
+		return ergebnis;
 	}
 
 }
