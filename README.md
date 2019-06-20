@@ -8,6 +8,8 @@
 
 Project for send emails with attachments. 
 
+If you like this project put a ⭐ and donate
+
 ## License
 
 The source code comes under the liberal MIT License, making email-tails great for all types of applications.
