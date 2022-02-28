@@ -38,8 +38,8 @@ import javax.mail.internet.InternetAddress;
 
 import de.alpharogroup.email.messages.EmailConstants;
 import de.alpharogroup.email.messages.EmailMessage;
-import de.alpharogroup.file.read.ReadFileExtensions;
-import de.alpharogroup.string.StringExtensions;
+import io.github.astrapi69.file.read.ReadFileExtensions;
+import io.github.astrapi69.string.StringExtensions;
 import lombok.experimental.ExtensionMethod;
 
 /**

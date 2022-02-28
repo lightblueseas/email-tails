@@ -24,15 +24,15 @@
  */
 package de.alpharogroup.email.messages;
 
-import static org.testng.AssertJUnit.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.io.File;
 import java.io.IOException;
 
-import org.testng.annotations.Test;
+import org.junit.jupiter.api.Test;
 
-import de.alpharogroup.file.search.PathFinder;
-import de.alpharogroup.test.messages.TestMessagesExtensions;
+import io.github.astrapi69.file.search.PathFinder;
+import io.github.astrapi69.test.message.TestMessagesExtensions;
 
 /**
  * The unit test class for the class {@link Mimetypes}.
@@ -59,8 +59,7 @@ public class MimetypesTest
 		// check if xml MimeType
 		expected = "application/xml";
 		actual = Mimetypes.getMimeType(xmlFile);
-		assertTrue(TestMessagesExtensions.newFailMessage("Mimetype", expected, actual),
-			expected.equals(actual));
+		assertTrue(expected.equals(actual), TestMessagesExtensions.newFailMessage("Mimetype", expected, actual));
 	}
 
 }

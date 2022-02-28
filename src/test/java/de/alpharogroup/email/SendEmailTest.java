@@ -24,9 +24,10 @@
  */
 package de.alpharogroup.email;
 
-import static org.testng.AssertJUnit.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 
 import java.io.File;
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URISyntaxException;
 import java.util.Properties;
@@ -38,9 +39,10 @@ import javax.mail.internet.AddressException;
 import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMultipart;
 
-import org.testng.annotations.AfterMethod;
-import org.testng.annotations.BeforeMethod;
-import org.testng.annotations.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.Test;
 
 import de.alpharogroup.email.messages.EmailConstants;
 import de.alpharogroup.email.messages.EmailMessage;
@@ -48,9 +50,9 @@ import de.alpharogroup.email.messages.EmailMessageWithAttachments;
 import de.alpharogroup.email.send.SendEmail;
 import de.alpharogroup.email.send.SendMail;
 import de.alpharogroup.email.utils.EmailExtensions;
-import de.alpharogroup.lang.ClassExtensions;
-import de.alpharogroup.lang.PackageExtensions;
-import de.alpharogroup.string.StringExtensions;
+import io.github.astrapi69.lang.ClassExtensions;
+import io.github.astrapi69.lang.PackageExtensions;
+import io.github.astrapi69.string.StringExtensions;
 import lombok.experimental.ExtensionMethod;
 
 /**
@@ -72,7 +74,7 @@ public class SendEmailTest
 	 * @throws Exception
 	 *             the exception
 	 */
-	@BeforeMethod
+	@BeforeEach
 	public void setUp() throws Exception
 	{
 		// emailProperties = new Properties();
@@ -85,13 +87,13 @@ public class SendEmailTest
 	 * @throws Exception
 	 *             the exception
 	 */
-	@AfterMethod
+	@AfterEach
 	public void tearDown() throws Exception
 	{
 		emailProperties = null;
 	}
 
-	@Test(enabled = false)
+	@Test@Disabled
 	public void testSendEmailEmailAttachments_01()
 		throws AddressException, UnsupportedEncodingException, MessagingException
 	{
@@ -118,9 +120,10 @@ public class SendEmailTest
 		System.out.println("messageId:" + messageId);
 	}
 
-	@Test(enabled = false)
-	public void testSendEmailEmailAttachments_02() throws AddressException,
-		UnsupportedEncodingException, MessagingException, URISyntaxException
+	@Test
+	@Disabled
+	public void testSendEmailEmailAttachments_02() throws
+			IOException, MessagingException, URISyntaxException
 	{
 		final SendMail sender = new SendEmail();
 
@@ -150,7 +153,7 @@ public class SendEmailTest
 		System.out.println("messageId:" + messageId);
 	}
 
-	@Test(enabled = false)
+	@Test@Disabled
 	public void testSendEmailEmailMessage()
 		throws AddressException, UnsupportedEncodingException, MessagingException
 	{
@@ -173,7 +176,7 @@ public class SendEmailTest
 		assertFalse(messageId.isNullOrEmpty());
 	}
 
-	@Test(enabled = false)
+	@Test@Disabled
 	public void testSendEmailStringStringStringString()
 		throws AddressException, UnsupportedEncodingException, MessagingException
 	{

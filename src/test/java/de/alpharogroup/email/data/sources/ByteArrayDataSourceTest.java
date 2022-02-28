@@ -24,7 +24,6 @@
  */
 package de.alpharogroup.email.data.sources;
 
-import static org.testng.AssertJUnit.assertEquals;
 
 import java.io.IOException;
 
@@ -32,10 +31,12 @@ import javax.activation.DataHandler;
 import javax.activation.DataSource;
 
 import org.apache.commons.codec.binary.Base64;
-import org.testng.annotations.Test;
 
 import de.alpharogroup.email.messages.Mimetypes;
 import de.alpharogroup.email.utils.EmailExtensions;
+import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 /**
  * The unit test class for the class {@link ByteArrayDataSource}.
@@ -58,7 +59,7 @@ public class ByteArrayDataSourceTest
 		final DataHandler dataHandler = new DataHandler(dataSource);
 		final String rawString = EmailExtensions.getString(dataHandler);
 		final String actual = new String(Base64.decodeBase64(rawString));
-		assertEquals("Not expected content", expected, actual);
+		assertEquals("Sample Data", expected, actual);
 	}
 
 }

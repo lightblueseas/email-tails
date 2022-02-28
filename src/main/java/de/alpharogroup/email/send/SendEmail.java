@@ -42,7 +42,7 @@ import de.alpharogroup.email.messages.EmailConstants;
 import de.alpharogroup.email.messages.EmailMessage;
 import de.alpharogroup.email.messages.EmailMessageWithAttachments;
 import de.alpharogroup.email.utils.EmailExtensions;
-import de.alpharogroup.resourcebundle.properties.PropertiesFileExtensions;
+import io.github.astrapi69.resourcebundle.properties.PropertiesFileExtensions;
 import lombok.Getter;
 
 /**
