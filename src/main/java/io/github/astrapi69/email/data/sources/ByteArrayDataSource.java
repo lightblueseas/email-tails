@@ -26,7 +26,6 @@ package io.github.astrapi69.email.data.sources;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
-import java.io.IOException;
 import java.io.InputStream;
 
 import javax.activation.DataSource;
