@@ -1,12 +1,19 @@
 # Overview
 
+<div style="text-align: center">
+
+[![Java CI with Gradle](https://github.com/lightblueseas/email-tails/actions/workflows/gradle.yml/badge.svg)](https://github.com/lightblueseas/email-tails/actions/workflows/gradle.yml)
 [![Build Status](https://travis-ci.org/lightblueseas/email-tails.svg?branch=develop)](https://travis-ci.org/lightblueseas/email-tails)
-[![Maven Central](https://maven-badges.herokuapp.com/maven-central/de.alpharogroup/email-tails/badge.svg)](https://maven-badges.herokuapp.com/maven-central/de.alpharogroup/email-tails)
-[![Javadocs](http://www.javadoc.io/badge/de.alpharogroup/email-tails.svg)](http://www.javadoc.io/doc/de.alpharogroup/email-tails)
+[![Maven Central](https://maven-badges.herokuapp.com/maven-central/io.github.astrapi69/email-tails/badge.svg)](https://maven-badges.herokuapp.com/maven-central/io.github.astrapi69/email-tails)
+[![Javadocs](http://www.javadoc.io/badge/io.github.astrapi69/email-tails.svg)](http://www.javadoc.io/doc/io.github.astrapi69/email-tails)
 [![MIT license](http://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat)](http://opensource.org/licenses/MIT)
 [![Donate](https://img.shields.io/badge/donate-❤-ff2244.svg)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=GVBTWLRAZ7HB8)
+[![Hits Of Code](https://hitsofcode.com/github/astrapi69/email-tails?branch=develop)](https://hitsofcode.com/github/astrapi69/email-tails/view?branch=develop)
+[![Lines Of Code](https://tokei.rs/b1/github/astrapi69/email-tails)](https://github.com/astrapi69/email-tails)
 
-Project for send emails with attachments. 
+</div>
+
+Project for send emails with attachments.
 
 If you like this project put a ⭐ and donate
 
@@ -17,29 +24,29 @@ The source code comes under the liberal MIT License, making email-tails great fo
 ## Maven dependency
 
 Maven dependency is now on sonatype.
-Check out [sonatype repository](https://oss.sonatype.org/index.html#nexus-search;gav~de.alpharogroup~email-tails~~~) for latest snapshots and releases.
+Check out [sonatype repository](https://oss.sonatype.org/index.html#nexus-search;gav~io.github.astrapi69~email-tails~~~) for latest snapshots and releases.
 
 Add the following maven dependency to your project `pom.xml` if you want to import the core functionality of email-tails:
 
 Than you can add the dependency to your dependencies:
 
-	<properties>
-			...
-		<!-- EMAIL-TAILS version -->
-		<email-tails.version>5.0.2</email-tails.version>
-			...
-	</properties>
-			...
-		<dependencies>
-			...
+    <properties>
+            ...
+        <!-- EMAIL-TAILS version -->
+        <email-tails.version>5.0.2</email-tails.version>
+            ...
+    </properties>
+            ...
+        <dependencies>
+            ...
             <!-- EMAIL-TAILS DEPENDENCY -->
-			<dependency>
-				<groupId>de.alpharogroup</groupId>
-				<artifactId>email-tails</artifactId>
-				<version>${email-tails.version}</version>
-			</dependency>
-			...
-		</dependencies>
+            <dependency>
+                <groupId>io.github.astrapi69</groupId>
+                <artifactId>email-tails</artifactId>
+                <version>${email-tails.version}</version>
+            </dependency>
+            ...
+        </dependencies>
 
 
 ## Want to Help and improve it? ###
@@ -75,7 +82,7 @@ or over ether with:
 
 0x588Aa02De98B1Ef70afeDC3ec5290130a3E5e273
 
-or over flattr: 
+or over flattr:
 <a href="https://flattr.com/submit/auto?fid=r7vp62&url=https%3A%2F%2Fgithub.com%2Flightblueseas%2Femail-tails" target="_blank">
 <img src="http://api.flattr.com/button/flattr-badge-large.png" alt="Flattr this" title="Flattr this" border="0" />
 </a>
@@ -86,6 +93,3 @@ or over flattr:
 |:-:|
 |![Travis CI](https://travis-ci.com/images/logos/TravisCI-Full-Color.png)|
 |Many thanks to [Travis CI](https://travis-ci.org) for providing a free continuous integration service for open source projects.|
-
-
-

@@ -4,6 +4,11 @@
 Version 5.1-SNAPSHOT
 -------------
 
+CHANGED:
+
+- changed to new package io.github.astrapi69
+
+
 Version 5.0.2
 -------------
 
@@ -40,7 +45,7 @@ CHANGED:
 - update of silly-collections version to 4.31
 - update of test-objects version to 4.28
 - update of file-worker version to 4.22
-- update of xstream version to 1.4.10 
+- update of xstream version to 1.4.10
 - update of resourcebundle-core version to 2.22
 
 Version 4.17
@@ -59,7 +64,7 @@ Version 4.16.0
 -------------
 
 ADDED:
- 
+
 - this changelog file
 - provide package.html for the javadoc of new packages
 - Donation buttons extended for paypal and bitcoin

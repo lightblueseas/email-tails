@@ -3,7 +3,7 @@
 <suite name="Suite">
   <test name="Test">
     <classes>
-      <class name="de.alpharogroup.email.SendEmailTest"/>
+      <class name="io.github.astrapi69.email.SendEmailTest"/>
     </classes>
   </test> <!-- Test -->
 </suite> <!-- Suite -->
