@@ -34,13 +34,13 @@ your project `build.gradle` if you want to import the core functionality of emai
 define version in file gradle.properties
 
 ```
-emailTailsVersion=1
+emailTailsVersion=6
 ```
 
 or in build.gradle ext area
 
 ```
-    emailTailsVersion = "1"
+    emailTailsVersion = "6"
 ```
 
 then add the dependency to the dependencies area
@@ -61,7 +61,7 @@ Than you can add the dependency to your dependencies:
     <properties>
             ...
         <!-- EMAIL-TAILS version -->
-        <email-tails.version>5.0.2</email-tails.version>
+        <email-tails.version>6</email-tails.version>
             ...
     </properties>
             ...
