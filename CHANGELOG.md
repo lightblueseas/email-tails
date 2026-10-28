@@ -12,7 +12,7 @@ BREAKING:
   jakarta one, which is why this is 7 and not 6.1. EmailMessage.setFrom(String) now overrides
   MimeMessage.setFrom(String) and therefore declares MessagingException only; an
   UnsupportedEncodingException arrives wrapped in it
-- the minimum Java version is 17 (was 1.8)
+- the minimum Java version is 25 (was 1.8), as in crypt-api and crypt-data
 - the default mail.properties moved from de/alpharogroup/email/send to
   io/github/astrapi69/email/send, the package the classes have lived in since version 6;
   EmailConstants.PROPERTIES_PACKAGE_PATH names it

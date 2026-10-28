@@ -1,6 +1,6 @@
 # pinned on purpose with := (not ?=): the shell's JAVA_HOME (e.g. sdkman's "current") may point at
-# another JDK, and this project's toolchain is JDK 17 (gradle.properties projectSourceCompatibility)
-JAVA_HOME := /home/astrapi69/.sdkman/candidates/java/17.0.20-tem
+# another JDK, and this project's toolchain is JDK 25 (gradle.properties projectSourceCompatibility)
+JAVA_HOME := /home/astrapi69/.sdkman/candidates/java/25-tem
 
 # every target goes through this, so the JDK pin lives in one place
 GRADLE := JAVA_HOME=$(JAVA_HOME) ./gradlew

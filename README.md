@@ -17,7 +17,7 @@ Project for send emails with attachments, built on Jakarta Mail 2.1 and Jakarta 
 with the Eclipse Angus implementations at runtime. Besides sending, it opens an existing .eml file,
 changes subject, sender and recipients, appends text to the body and writes it back (EmlModifier).
 
-Version 7 requires Java 17 or newer and replaces javax.mail with jakarta.mail; a project still on
+Version 7 requires Java 25 or newer and replaces javax.mail with jakarta.mail; a project still on
 javax.mail stays on version 6.
 
 > Please support this project by simply putting a Github <!-- Place this tag where you want the button to render. -->

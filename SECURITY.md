@@ -11,7 +11,7 @@ supporting several lines at once is a promise it could not keep.
 
 | Version | Supported          | Required JDK | Mail API                 |
 |---------|--------------------|--------------|--------------------------|
-| 7.x     | :white_check_mark: | 17 and above | jakarta.mail 2.1 (Angus) |
+| 7.x     | :white_check_mark: | 25 and above | jakarta.mail 2.1 (Angus) |
 | 6.x     | :x:                | 8 and above  | javax.mail 1.4           |
 | < 6     | :x:                | 8 and above  | javax.mail 1.4           |
 
