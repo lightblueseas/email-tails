@@ -45,4 +45,7 @@ public abstract class EmailConstants
 	/** Constant for the name from the properties-file. */
 	public static final String PROPERTIES_FILENAME = "mail.properties";
 
+	/** The package path of the default mail properties file, with a trailing slash. */
+	public static final String PROPERTIES_PACKAGE_PATH = "io/github/astrapi69/email/send/";
+
 }

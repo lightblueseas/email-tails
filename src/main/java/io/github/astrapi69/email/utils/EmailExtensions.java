@@ -29,18 +29,17 @@ import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
 import java.util.Base64;
 
-import javax.activation.DataHandler;
-import javax.mail.Address;
-import javax.mail.Message;
-import javax.mail.MessagingException;
-import javax.mail.internet.AddressException;
-import javax.mail.internet.InternetAddress;
-
-import lombok.experimental.ExtensionMethod;
 import io.github.astrapi69.email.messages.EmailConstants;
 import io.github.astrapi69.email.messages.EmailMessage;
 import io.github.astrapi69.file.read.ReadFileExtensions;
 import io.github.astrapi69.string.StringExtensions;
+import jakarta.activation.DataHandler;
+import jakarta.mail.Address;
+import jakarta.mail.Message;
+import jakarta.mail.MessagingException;
+import jakarta.mail.internet.AddressException;
+import jakarta.mail.internet.InternetAddress;
+import lombok.experimental.ExtensionMethod;
 
 /**
  * The class EmailExtensions provides methods for create email addresses and validate email

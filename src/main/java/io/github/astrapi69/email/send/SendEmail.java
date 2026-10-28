@@ -31,19 +31,18 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Properties;
 
-import javax.mail.Address;
-import javax.mail.Authenticator;
-import javax.mail.MessagingException;
-import javax.mail.Session;
-import javax.mail.Transport;
-import javax.mail.internet.AddressException;
-
-import lombok.Getter;
 import io.github.astrapi69.email.messages.EmailConstants;
 import io.github.astrapi69.email.messages.EmailMessage;
 import io.github.astrapi69.email.messages.EmailMessageWithAttachments;
 import io.github.astrapi69.email.utils.EmailExtensions;
 import io.github.astrapi69.resourcebundle.properties.PropertiesFileExtensions;
+import jakarta.mail.Address;
+import jakarta.mail.Authenticator;
+import jakarta.mail.MessagingException;
+import jakarta.mail.Session;
+import jakarta.mail.Transport;
+import jakarta.mail.internet.AddressException;
+import lombok.Getter;
 
 /**
  * Helper-class for sending emails.
@@ -145,8 +144,8 @@ public class SendEmail implements SendMail
 	{
 		try
 		{
-			properties = PropertiesFileExtensions.loadProperties(this,
-				EmailConstants.PROPERTIES_FILENAME);
+			properties = PropertiesFileExtensions.loadProperties(SendEmail.class,
+				EmailConstants.PROPERTIES_PACKAGE_PATH, EmailConstants.PROPERTIES_FILENAME);
 		}
 		catch (IOException e)
 		{

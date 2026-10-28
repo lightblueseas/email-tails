@@ -9,9 +9,9 @@ name: Java CI with Gradle
 
 on:
   push:
-    branches: [ develop ]
+    branches: [ master, develop ]
   pull_request:
-    branches: [ develop ]
+    branches: [ master, develop ]
 
 jobs:
   build:
@@ -19,17 +19,104 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v2
-    - name: Set up JDK 1.8
-      uses: actions/setup-java@v2
-      with:
-        java-version: '8.0.302+8'
-        distribution: 'temurin'
-    - name: Build with Gradle
-      uses: gradle/gradle-build-action@937999e9cc2425eddc7fd62d1053baf041147db7
-      with:
-        arguments: build
-      env:
-        ossrhUsername: ${{secrets.OSSRHUSERNAME}}
-        ossrhPassword: ${{secrets.OSSRHPASSWORD}}
-    - uses: codecov/codecov-action@v2
+      - name: Checkout sources
+        uses: actions/checkout@v7
+      - name: Setup Java
+        uses: actions/setup-java@v5
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+      - name: Setup Gradle
+        uses: gradle/actions/setup-gradle@v6
+      - name: Set up SoftHSM2 for the PKCS#11 tests
+        # Without a PKCS#11 module the Pkcs11Factory tests skip themselves via JUnit assumptions,
+        # which silently lowers coverage on CI relative to a developer machine that has SoftHSM2.
+        # Installing it here makes the reported numbers mean the same thing everywhere.
+        run: |
+          set -euo pipefail
+          sudo apt-get update
+          sudo apt-get install -y softhsm2
+          # SoftHSM2 reads ~/.config/softhsm2/softhsm2.conf before /etc; point the token store at
+          # ~/.config/softhsm2/tokens, which is where Pkcs11FactorySoftHsmTest looks for a token.
+          mkdir -p "$HOME/.config/softhsm2/tokens"
+          printf 'directories.tokendir = %s/.config/softhsm2/tokens\nobjectstore.backend = file\nlog.level = INFO\n' "$HOME" \
+            > "$HOME/.config/softhsm2/softhsm2.conf"
+          softhsm2-util --init-token --free --label mystic-crypt-test --so-pin 654321 --pin 123456
+          softhsm2-util --show-slots | head -20
+          # SunPKCS11 config for Pkcs11FactoryTest, which takes its path from a system property
+          LIBRARY=$(ls /usr/lib/softhsm/libsofthsm2.so /usr/lib/x86_64-linux-gnu/softhsm/libsofthsm2.so 2>/dev/null | head -1)
+          test -n "$LIBRARY"
+          printf 'name = SoftHsmCi\nlibrary = %s\nslotListIndex = 0\n' "$LIBRARY" > "$HOME/softhsm-pkcs11.cfg"
+          echo "PKCS11_TEST_CONFIG=$HOME/softhsm-pkcs11.cfg" >> "$GITHUB_ENV"
+      - name: Execute Gradle build
+        run: ./gradlew build -DPKCS11_TEST_CONFIG="$PKCS11_TEST_CONFIG"
+        env:
+          ossrhUsername: ${{secrets.OSSRHUSERNAME}}
+          ossrhPassword: ${{secrets.OSSRHPASSWORD}}
+      - name: Mutation testing (PIT, fails below mutationThreshold in build.gradle)
+        run: |
+          ./gradlew pitest
+      - uses: codecov/codecov-action@v7
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }} # not required for public repos
+          # the uploader searches the tree and found .idea/runConfigurations/code_coverage_main.xml,
+          # an IntelliJ run configuration, as a second "coverage file" (mystic-crypt#151). Name the report
+          # and switch the search off: a gate reporting numbers nobody produced is worse than one
+          # reporting none
+          files: build/reports/jacoco/test/jacocoTestReport.xml
+          disable_search: true
+      - name: Extract test count
+        id: test_count
+        run: |
+          # Gradle's JUnit XML reports: one <testsuite tests="N" .../> root per test class,
+          # sum the tests attribute across all of them. This runs in the same job as the build
+          # above so the count includes the PKCS#11 tests that SoftHSM2 makes runnable.
+          TOTAL=$(grep -ohE 'tests="[0-9]+"' build/test-results/test/*.xml \
+            | grep -oE '[0-9]+' | awk '{sum += $1} END {print sum}')
+
+          if [ -z "$TOTAL" ] || [ "$TOTAL" -eq 0 ]; then
+            TOTAL="0"
+            COLOR="red"
+          elif [ "$TOTAL" -lt 50 ]; then
+            COLOR="yellow"
+          elif [ "$TOTAL" -lt 200 ]; then
+            COLOR="green"
+          else
+            COLOR="brightgreen"
+          fi
+
+          echo "total=$TOTAL" >> $GITHUB_OUTPUT
+          echo "color=$COLOR" >> $GITHUB_OUTPUT
+          echo "Test cases found: $TOTAL"
+      - name: Update badge
+        if: github.ref == 'refs/heads/master' || github.ref == 'refs/heads/develop'
+        uses: schneegans/dynamic-badges-action@v1.7.0
+        with:
+          auth: ${{ secrets.GIST_TOKEN }}
+          gistID: 69b2e93dd826ce43cc3f02433a465ae3
+          filename: crypt-data-test-cases.json
+          label: Tested Use Cases
+          message: ${{ steps.test_count.outputs.total }}
+          color: ${{ steps.test_count.outputs.color }}
+      # Snapshots only. A non-SNAPSHOT version on develop is deliberately NOT
+      # published here: the release commit reaches develop when the release pull
+      # request is merged, so publishing from this push uploads a release with
+      # nobody deciding to - and duplicates the deliberate upload that follows.
+      # Releasing this repository is a manual step: push the RELEASE-* tag, see publish.yml.
+      - name: Publish snapshot to Maven Central
+        if: github.event_name == 'push'
+        run: |
+          if grep -q -- '-SNAPSHOT' gradle.properties; then
+            ./gradlew nmcpPublishAllPublicationsToCentralPortalSnapshots
+          else
+            echo "non-SNAPSHOT version: releasing this repository is a deliberate manual step"
+          fi
+        env:
+          CENTRAL_PORTAL_TOKEN_USERNAME: ${{ secrets.CENTRAL_PORTAL_TOKEN_USERNAME }}
+          CENTRAL_PORTAL_TOKEN_PASSWORD: ${{ secrets.CENTRAL_PORTAL_TOKEN_PASSWORD }}
+          GPG_PRIVATE_KEY: ${{ secrets.GPG_PRIVATE_KEY }}
+          GPG_PASSPHRASE: ${{ secrets.GPG_PASSPHRASE }}
+          # the signing subkey's last 8 hex digits, as publish.yml passes it (#91): since the
+          # secrets hold the subkey alone (2026-10-10), signing without it takes the primary
+          # key's stub and fails every push build at this step
+          GPG_KEY_ID: ${{ secrets.GPG_KEY_ID }}

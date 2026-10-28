@@ -32,15 +32,6 @@ import java.io.UnsupportedEncodingException;
 import java.net.URISyntaxException;
 import java.util.Properties;
 
-import javax.mail.Address;
-import javax.mail.BodyPart;
-import javax.mail.MessagingException;
-import javax.mail.internet.AddressException;
-import javax.mail.internet.MimeBodyPart;
-import javax.mail.internet.MimeMultipart;
-
-import lombok.experimental.ExtensionMethod;
-
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
@@ -55,6 +46,13 @@ import io.github.astrapi69.email.utils.EmailExtensions;
 import io.github.astrapi69.lang.ClassExtensions;
 import io.github.astrapi69.lang.PackageExtensions;
 import io.github.astrapi69.string.StringExtensions;
+import jakarta.mail.Address;
+import jakarta.mail.BodyPart;
+import jakarta.mail.MessagingException;
+import jakarta.mail.internet.AddressException;
+import jakarta.mail.internet.MimeBodyPart;
+import jakarta.mail.internet.MimeMultipart;
+import lombok.experimental.ExtensionMethod;
 
 /**
  * The unit test class for the class {@link SendEmail}.
@@ -114,7 +112,7 @@ public class SendEmailTest
 		final BodyPart part = new MimeBodyPart();
 		part.setFileName("text.txt");
 		part.setDescription("One textfile");
-		part.setDisposition(javax.mail.Part.ATTACHMENT);
+		part.setDisposition(jakarta.mail.Part.ATTACHMENT);
 		part.setText("This is an email with unicode characters. ÄÖÜ_äöüß.");
 
 		content.addBodyPart(part);

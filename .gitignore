@@ -6,9 +6,15 @@
 ##################
 # intellij files #
 ##################
+*.iws
 *.iml
-.idea
-*/.idea
+*.ipr
+!.idea/runConfigurations
+.idea/inspectionProfiles
+.idea/libraries
+.idea/codeStyles
+.idea/shelf
+.idea/*.*
 
 #################
 # eclipse files #
@@ -18,21 +24,44 @@
 /.settings
 /.tern-project
 
+###########
+### STS ###
+###########
+.apt_generated
+.factorypath
+.springBeans
+.sts4-cache
+
+
+################
+### NetBeans ###
+################
+/nbproject/private/
+/nbbuild/
+/nbdist/
+/.nb-gradle/
+/build/
+
 #########################
 # maven generated files #
 #########################
 /target
+/.mvn/
+*.versionsBackup
 
 #############
 # Zip files #
 #############
 *.tar
+*.tar.gz
 *.zip
 *.7z
 *.dmg
 *.gz
 *.iso
 *.jar
+*.war
+*.ear
 *.rar
 
 ##############
@@ -55,5 +84,5 @@
 ################
 /build
 /.gradle
-/gradle
 /pom.xml.bak
+/.attach_pid*
