@@ -1,5 +1,5 @@
 # Refuses a pull request whose commits credit a non-human collaborator: as a co-author trailer, or
-# as author or committer (#66). The script is the same file as in mystic-crypt-ui, whose
+# as author or committer (astrapi69/crypt-data#66). The script is the same file as in mystic-crypt-ui, whose
 # CommitProvenanceCheckTest drives it against real git repositories.
 #
 # The commit-msg hook catches this before the commit exists, but a hook has to be installed locally

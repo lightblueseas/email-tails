@@ -5,7 +5,7 @@
 # The manual snapshot run exists so this path can be EXECUTED rather than only wired: it
 # exercises the checkout, the JDK setup, the Gradle setup, the secrets and the signature -
 # everything the tag run does except the final release upload. Run it after any change to
-# this file, on develop, before a release tag depends on it (#80).
+# this file, on develop, before a release tag depends on it (astrapi69/crypt-data#80).
 # Required repository secrets:
 #   CENTRAL_PORTAL_TOKEN_USERNAME / CENTRAL_PORTAL_TOKEN_PASSWORD - Central Portal user token
 #   GPG_PRIVATE_KEY / GPG_PASSPHRASE    - ascii-armored signing key and its passphrase
