@@ -28,15 +28,14 @@ package io.github.astrapi69.email.data.sources;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.io.IOException;
+import java.util.Base64;
 
-import javax.activation.DataHandler;
-import javax.activation.DataSource;
-
-import org.apache.commons.codec.binary.Base64;
 import org.junit.jupiter.api.Test;
 
 import io.github.astrapi69.email.messages.Mimetypes;
 import io.github.astrapi69.email.utils.EmailExtensions;
+import jakarta.activation.DataHandler;
+import jakarta.activation.DataSource;
 
 /**
  * The unit test class for the class {@link ByteArrayDataSource}.
@@ -58,7 +57,7 @@ public class ByteArrayDataSourceTest
 			Mimetypes.TEXT_PLAIN.getMimetype());
 		final DataHandler dataHandler = new DataHandler(dataSource);
 		final String rawString = EmailExtensions.getString(dataHandler);
-		final String actual = new String(Base64.decodeBase64(rawString));
+		final String actual = new String(Base64.getDecoder().decode(rawString));
 		assertEquals("Sample Data", expected, actual);
 	}
 

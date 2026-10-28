@@ -1,19 +1,24 @@
-# Overview
-
 <div style="text-align: center">
 
 [![Java CI with Gradle](https://github.com/lightblueseas/email-tails/actions/workflows/gradle.yml/badge.svg)](https://github.com/lightblueseas/email-tails/actions/workflows/gradle.yml)
-[![Build Status](https://travis-ci.org/lightblueseas/email-tails.svg?branch=develop)](https://travis-ci.org/lightblueseas/email-tails)
-[![Maven Central](https://maven-badges.herokuapp.com/maven-central/io.github.astrapi69/email-tails/badge.svg)](https://maven-badges.herokuapp.com/maven-central/io.github.astrapi69/email-tails)
+[![Coverage Status](https://codecov.io/gh/lightblueseas/email-tails/branch/develop/graph/badge.svg)](https://codecov.io/gh/lightblueseas/email-tails)
+[![Open Issues](https://img.shields.io/github/issues/lightblueseas/email-tails.svg?style=flat)](https://github.com/lightblueseas/email-tails/issues)
+[![Maven Central](https://img.shields.io/maven-central/v/io.github.astrapi69/email-tails.svg?label=Maven%20Central)](https://central.sonatype.com/artifact/io.github.astrapi69/email-tails)
 [![Javadocs](http://www.javadoc.io/badge/io.github.astrapi69/email-tails.svg)](http://www.javadoc.io/doc/io.github.astrapi69/email-tails)
-[![MIT license](http://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat)](http://opensource.org/licenses/MIT)
-[![Donate](https://img.shields.io/badge/donate-❤-ff2244.svg)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=GVBTWLRAZ7HB8)
-[![Hits Of Code](https://hitsofcode.com/github/astrapi69/email-tails?branch=develop)](https://hitsofcode.com/github/astrapi69/email-tails/view?branch=develop)
-[![Lines Of Code](https://tokei.rs/b1/github/astrapi69/email-tails)](https://github.com/astrapi69/email-tails)
+[![MIT License](http://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat)](http://opensource.org/licenses/MIT)
+[![Donate](https://img.shields.io/badge/donate-PayPal-ff2244.svg)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=GVBTWLRAZ7HB8)
+[![Hits Of Code](https://hitsofcode.com/github/lightblueseas/email-tails?branch=develop)](https://hitsofcode.com/github/lightblueseas/email-tails/view?branch=develop)
 
 </div>
 
-Project for send emails with attachments.
+# Overview
+
+Project for send emails with attachments, built on Jakarta Mail 2.1 and Jakarta Activation 2.1
+with the Eclipse Angus implementations at runtime. Besides sending, it opens an existing .eml file,
+changes subject, sender and recipients, appends text to the body and writes it back (EmlModifier).
+
+Version 7 requires Java 25 or newer and replaces javax.mail with jakarta.mail; a project still on
+javax.mail stays on version 6.
 
 > Please support this project by simply putting a Github <!-- Place this tag where you want the button to render. -->
 <a class="github-button" href="https://github.com/astrapi69/email-tails" data-icon="octicon-star" aria-label="Star astrapi69/email-tails on GitHub">Star ⭐</a>
@@ -28,19 +33,32 @@ The source code comes under the liberal MIT License, making email-tails great fo
 
 ## gradle dependency
 
+Replace the variable ${latestVersion} with the current latest
+version: [![Maven Central](https://img.shields.io/maven-central/v/io.github.astrapi69/email-tails.svg?label=Maven%20Central)](https://central.sonatype.com/artifact/io.github.astrapi69/email-tails)
+
 You can first define the version in the ext section and add than the following gradle dependency to
 your project `build.gradle` if you want to import the core functionality of email-tails:
 
 define version in file gradle.properties
 
 ```
-emailTailsVersion=6
+emailTailsVersion=${latestVersion}
 ```
 
 or in build.gradle ext area
 
 ```
-    emailTailsVersion = "6"
+    emailTailsVersion = "${latestVersion}"
+```
+
+or, with a version catalog, in gradle/libs.versions.toml
+
+```
+[versions]
+email-tails-version = "${latestVersion}"
+
+[libraries]
+email-tails = { module = "io.github.astrapi69:email-tails", version.ref = "email-tails-version" }
 ```
 
 then add the dependency to the dependencies area
@@ -51,8 +69,9 @@ then add the dependency to the dependencies area
 
 ## Maven dependency
 
-Maven dependency is now on sonatype.
-Check out [sonatype repository](https://oss.sonatype.org/index.html#nexus-search;gav~io.github.astrapi69~email-tails~~~) for latest snapshots and releases.
+Maven dependency is now on Maven Central.
+Check out [Maven Central](https://central.sonatype.com/artifact/io.github.astrapi69/email-tails) for the latest
+releases, and the [Central Portal snapshots](https://central.sonatype.com/repository/maven-snapshots/) for snapshots.
 
 Add the following maven dependency to your project `pom.xml` if you want to import the core functionality of email-tails:
 
@@ -61,7 +80,7 @@ Than you can add the dependency to your dependencies:
     <properties>
             ...
         <!-- EMAIL-TAILS version -->
-        <email-tails.version>6</email-tails.version>
+        <email-tails.version>${latestVersion}</email-tails.version>
             ...
     </properties>
             ...
@@ -76,6 +95,30 @@ Than you can add the dependency to your dependencies:
             ...
         </dependencies>
 
+
+## Development
+
+The build is Gradle 9 with a version catalog in `gradle/libs.versions.toml`; the build logic sits in
+`gradle/*.gradle`, listed in `gradle/gradle-files.list`. `make help` lists the make targets that wrap
+the everyday Gradle calls.
+
+```
+./gradlew build            # compile, test, jacoco, spotless check, API compatibility against the last release
+./gradlew spotlessApply    # format, order imports, add the MIT header
+./gradlew pitest           # mutation testing; the floor stands in build.gradle
+./gradlew dependencyUpdates versionCatalogUpdate --interactive   # see and stage dependency updates
+```
+
+Install the commit hook once after cloning; it refuses a commit that credits a non-human
+collaborator, the same rule the commit-provenance workflow enforces on pull requests:
+
+```
+git config core.hooksPath .githooks
+```
+
+Releasing is a manual step: push a `RELEASE-*` tag (`./gradlew tagRelease`), and the publish
+workflow uploads the signed artifacts to the Central Portal. A push to develop publishes a
+snapshot. Security reports go through [SECURITY.md](SECURITY.md), not the issue tracker.
 
 ## Want to Help and improve it? ###
 

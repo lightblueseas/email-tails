@@ -29,14 +29,12 @@ import java.io.Serializable;
 import java.io.UnsupportedEncodingException;
 import java.util.Enumeration;
 
-import javax.mail.Address;
-import javax.mail.MessagingException;
-import javax.mail.Session;
-import javax.mail.internet.AddressException;
-import javax.mail.internet.MimeMessage;
-
-import lombok.Getter;
 import io.github.astrapi69.email.utils.EmailExtensions;
+import jakarta.mail.Address;
+import jakarta.mail.MessagingException;
+import jakarta.mail.Session;
+import jakarta.mail.internet.MimeMessage;
+import lombok.Getter;
 
 /**
  * This class represents an email message.
@@ -85,7 +83,7 @@ public class EmailMessage extends MimeMessage implements Serializable
 	 */
 	public void addBcc(final Address internetAddress) throws MessagingException
 	{
-		super.addRecipient(javax.mail.Message.RecipientType.BCC, internetAddress);
+		super.addRecipient(jakarta.mail.Message.RecipientType.BCC, internetAddress);
 	}
 
 	/**
@@ -99,7 +97,7 @@ public class EmailMessage extends MimeMessage implements Serializable
 	 */
 	public void addCc(final Address internetAddress) throws MessagingException
 	{
-		super.addRecipient(javax.mail.Message.RecipientType.CC, internetAddress);
+		super.addRecipient(jakarta.mail.Message.RecipientType.CC, internetAddress);
 	}
 
 	/**
@@ -127,7 +125,7 @@ public class EmailMessage extends MimeMessage implements Serializable
 	 */
 	public void addTo(final Address internetAddress) throws MessagingException
 	{
-		super.addRecipient(javax.mail.Message.RecipientType.TO, internetAddress);
+		super.addRecipient(jakarta.mail.Message.RecipientType.TO, internetAddress);
 	}
 
 	/**
@@ -187,23 +185,23 @@ public class EmailMessage extends MimeMessage implements Serializable
 				final String line = (String)enumeration.nextElement();
 				cloned.addHeaderLine(line);
 			}
-			if (this.getRecipients(javax.mail.Message.RecipientType.TO) != null)
+			if (this.getRecipients(jakarta.mail.Message.RecipientType.TO) != null)
 			{
 				final Address[] toAddresses = this
-					.getRecipients(javax.mail.Message.RecipientType.TO);
-				cloned.setRecipients(javax.mail.Message.RecipientType.TO, toAddresses);
+					.getRecipients(jakarta.mail.Message.RecipientType.TO);
+				cloned.setRecipients(jakarta.mail.Message.RecipientType.TO, toAddresses);
 			}
-			if (this.getRecipients(javax.mail.Message.RecipientType.CC) != null)
+			if (this.getRecipients(jakarta.mail.Message.RecipientType.CC) != null)
 			{
 				final Address[] ccAddresses = this
-					.getRecipients(javax.mail.Message.RecipientType.CC);
-				cloned.setRecipients(javax.mail.Message.RecipientType.CC, ccAddresses);
+					.getRecipients(jakarta.mail.Message.RecipientType.CC);
+				cloned.setRecipients(jakarta.mail.Message.RecipientType.CC, ccAddresses);
 			}
-			if (this.getRecipients(javax.mail.Message.RecipientType.BCC) != null)
+			if (this.getRecipients(jakarta.mail.Message.RecipientType.BCC) != null)
 			{
 				final Address[] bccAddresses = this
-					.getRecipients(javax.mail.Message.RecipientType.BCC);
-				cloned.setRecipients(javax.mail.Message.RecipientType.BCC, bccAddresses);
+					.getRecipients(jakarta.mail.Message.RecipientType.BCC);
+				cloned.setRecipients(jakarta.mail.Message.RecipientType.BCC, bccAddresses);
 			}
 			if (this.getReplyTo() != null)
 			{
@@ -302,7 +300,7 @@ public class EmailMessage extends MimeMessage implements Serializable
 	 *             is thrown if the underlying implementation does not support modification of
 	 *             existing values
 	 *
-	 * @see javax.mail.Part#setContent(java.lang.Object, java.lang.String)
+	 * @see jakarta.mail.Part#setContent(java.lang.Object, java.lang.String)
 	 */
 	@Override
 	public void setContent(final Object content, final String type) throws MessagingException
@@ -312,23 +310,29 @@ public class EmailMessage extends MimeMessage implements Serializable
 	}
 
 	/**
-	 * Sets the from address.
+	 * Sets the sender of this message from the given email address. The personal name is set to the
+	 * address itself, as {@link EmailExtensions#newAddress(String)} does.
 	 *
 	 * @param senderEmail
-	 *            the new from
-	 * @throws AddressException
-	 *             the address exception
-	 * @throws UnsupportedEncodingException
-	 *             is thrown if the encoding not supported
+	 *            the email address of the sender
 	 * @throws MessagingException
-	 *             is thrown if the underlying implementation does not support modification of
-	 *             existing values
+	 *             if the address cannot be parsed, or its personal name cannot be encoded. Since
+	 *             jakarta.mail this method overrides {@link MimeMessage#setFrom(String)}, which
+	 *             declares only this exception, so an UnsupportedEncodingException arrives wrapped
+	 *             in it
 	 */
-	public void setFrom(final String senderEmail)
-		throws AddressException, UnsupportedEncodingException, MessagingException
+	@Override
+	public void setFrom(final String senderEmail) throws MessagingException
 	{
-		final Address fromEmail = EmailExtensions.newAddress(senderEmail);
-		super.setFrom(fromEmail);
+		try
+		{
+			final Address fromEmail = EmailExtensions.newAddress(senderEmail);
+			super.setFrom(fromEmail);
+		}
+		catch (final UnsupportedEncodingException e)
+		{
+			throw new MessagingException("Could not encode the personal name of " + senderEmail, e);
+		}
 	}
 
 	/**
@@ -340,7 +344,7 @@ public class EmailMessage extends MimeMessage implements Serializable
 	 *             is thrown if the underlying implementation does not support modification of
 	 *             existing values
 	 *
-	 * @see javax.mail.Message#setSubject(java.lang.String)
+	 * @see jakarta.mail.Message#setSubject(java.lang.String)
 	 */
 	@Override
 	public void setSubject(final String subject) throws MessagingException
@@ -364,7 +368,7 @@ public class EmailMessage extends MimeMessage implements Serializable
 	 *             is thrown if the underlying implementation does not support modification of
 	 *             existing values
 	 *
-	 * @see javax.mail.internet.MimeMessage#setSubject(java.lang.String, java.lang.String)
+	 * @see jakarta.mail.internet.MimeMessage#setSubject(java.lang.String, java.lang.String)
 	 */
 	@Override
 	public void setSubject(final String subject, final String charset) throws MessagingException
@@ -381,7 +385,7 @@ public class EmailMessage extends MimeMessage implements Serializable
 	 *             is thrown if the underlying implementation does not support modification of
 	 *             existing values
 	 *
-	 * @see javax.mail.Part#setContent(java.lang.Object, java.lang.String)
+	 * @see jakarta.mail.Part#setContent(java.lang.Object, java.lang.String)
 	 */
 	public void setUtf8Content(final Object content) throws MessagingException
 	{

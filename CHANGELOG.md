@@ -1,9 +1,56 @@
 ## Change log
 ----------------------
 
-Version 6.1-SNAPSHOT
+Version 7-SNAPSHOT
 -------------
 
+BREAKING:
+
+- javax.mail and javax.activation are replaced by Jakarta Mail 2.1 and Jakarta Activation 2.1
+  (packages jakarta.mail and jakarta.activation), with the Eclipse Angus implementations at
+  runtime. Every public signature that named a javax.mail or javax.activation type now names the
+  jakarta one, which is why this is 7 and not 6.1. EmailMessage.setFrom(String) now overrides
+  MimeMessage.setFrom(String) and therefore declares MessagingException only; an
+  UnsupportedEncodingException arrives wrapped in it
+- the minimum Java version is 25 (was 1.8), as in crypt-api and crypt-data
+- the default mail.properties moved from de/alpharogroup/email/send to
+  io/github/astrapi69/email/send, the package the classes have lived in since version 6;
+  EmailConstants.PROPERTIES_PACKAGE_PATH names it
+
+ADDED:
+
+- EmlModifier, MimeMessageUtils and EmailModificationRequest: open an .eml file, change subject,
+  sender and recipients, append text to the body and write it back. Covered by parameterized tests
+  that run every change over the .eml fixtures under src/test/resources/eml: plain text, html,
+  multipart/alternative, multipart/mixed with an attachment, existing CC and BCC with an
+  encoded-word subject, and quoted-printable Latin-1
+- Makefile with the family's targets: build, spotless, pitest, api-compatibility, publish-local,
+  publish-snapshot and publish-central (the uploads need CONFIRM=yes), install-hooks; `make help`
+  lists them
+- gradle: version catalog (gradle/libs.versions.toml), build split into gradle/*.gradle files,
+  spotless with the shared formatter, import order and MIT header, jacoco, PIT mutation testing
+  with a floor in build.gradle, japicmp API compatibility gate against the last release
+  (apiBaselineVersion in gradle.properties), publishing to the Central Portal through nmcp with
+  signing that follows the key, mavenLocal only with -PuseMavenLocal
+- github: CodeQL, commit provenance, closing references and release freeze workflows, a publish
+  workflow for RELEASE-* tags, codecov configuration, SECURITY.md, a commit-msg hook under
+  .githooks (install with `git config core.hooksPath .githooks`)
+
+CHANGED:
+
+- update gradle to version 9.7.0; the wrapper script, which was an empty file, is restored
+- update of resourcebundle-core to 6.1, file-worker to 19.1, silly-strings to 9.2, lombok to
+  1.18.48, junit-jupiter to 6.1.3, jobj-core to 9.1 and test-objects to its successor
+  test-object 9.1
+- jakarta.mail-api and jakarta.activation-api are api dependencies, since this library's public
+  types extend and expose them; angus-mail and angus-activation are runtimeOnly
+- mime-util no longer drags the slf4j-log4j12 binding and log4j 1.2.14 onto the classpath
+
+REMOVED:
+
+- the dependencies on xstream, silly-collections, net-extensions, meanbean and commons-codec: no
+  class in this project used them
+- the Eclipse launch configurations of the maven era under src/launch
 
 
 Version 6

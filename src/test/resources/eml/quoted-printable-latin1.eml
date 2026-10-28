@@ -1,0 +1,10 @@
+From: Alice Example <alice@example.com>
+To: Bob Example <bob@example.com>
+Subject: Quoted printable mail
+Date: Tue, 28 Oct 2026 10:00:00 +0100
+MIME-Version: 1.0
+Message-ID: <quoted-printable-1@example.com>
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: quoted-printable
+
+Sch=F6ne Gr=FC=DFe mit Latin-1: =E4=F6=FC.

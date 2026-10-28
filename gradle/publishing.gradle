@@ -1,0 +1,132 @@
+def releaseVersion = !version.endsWith("SNAPSHOT")
+
+task sourcesJar(type: Jar) {
+    archiveClassifier.set("sources")
+    from(sourceSets.main.allJava)
+}
+
+task javadocJar(type: Jar) {
+    from javadoc
+    archiveClassifier.set("javadoc")
+    javadoc {
+        failOnError = false
+    }
+}
+
+javadoc {
+    failOnError = false
+    if (JavaVersion.current().isJava9Compatible()) {
+        options.addBooleanOption("html5", true)
+    }
+}
+
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            artifactId = "$rootProject.name"
+            from components.java
+            artifact sourcesJar
+            artifact javadocJar
+            pom {
+                name = "$rootProject.name"
+                description = "$projectDescription"
+                url = "$projectScmProviderUrl" + "$projectHolderUsername" + "$slash" + "$rootProject.name"
+                organization {
+                    name = "$projectOrganizationName"
+                    url = "$projectOrganizationUrl"
+                }
+                issueManagement {
+                    system = "$projectIssueManagementSystem"
+                    url = "$projectScmProviderUrl" + "$projectHolderUsername" + "$slash" + "$rootProject.name" + "$issuesPath"
+                }
+                licenses {
+                    license {
+                        name = "$projectLicenseName"
+                        url = "$projectLicenseUrl"
+                        distribution = "$projectLicenseDistribution"
+                    }
+                }
+                developers {
+                    developer {
+                        id = "$projectHolderUsername"
+                        name = "$projectLeaderName"
+                    }
+                }
+                scm {
+                    connection = "$projectScmGitUrlPrefix" + "$projectScmProviderDomain" + "$colon" + "$projectHolderUsername" + "$slash" + "$rootProject.name" + "$projectScmGitUrlSuffix"
+                    developerConnection = "$projectScmGitUrlPrefix" + "$projectScmProviderDomain" + "$colon" + "$projectHolderUsername" + "$slash" + "$rootProject.name" + "$projectScmGitUrlSuffix"
+                    url = "$projectScmGitUrlPrefix" + "$projectScmProviderDomain" + "$colon" + "$projectHolderUsername" + "$slash" + "$rootProject.name" + "$projectScmGitUrlSuffix"
+                }
+            }
+        }
+    }
+}
+
+// Central Portal publishing. This uses the per-project "com.gradleup.nmcp" plugin rather than the
+// "com.gradleup.nmcp.settings" one: email-tails is a single-project build, so there is nothing to
+// aggregate, and the settings plugin's aggregation wiring passes a Project as a dependency notation
+// (DefaultNmcpSettings.kt:37), which Gradle 10 removes.
+nmcp {
+    publishAllPublicationsToCentralPortal {
+        // Generate a user token at https://central.sonatype.com/ (Account -> Generate User Token).
+        // This is NOT the legacy OSSRH username/password - the Portal Publisher API requires a
+        // dedicated token pair.
+        //
+        // CI passes the token through the environment. A release prepared by hand reads it from
+        // centralUsername / centralPassword in ~/.gradle/gradle.properties instead, so the token
+        // never has to be exported into a shell or typed onto a command line.
+        username = System.getenv("CENTRAL_PORTAL_TOKEN_USERNAME")
+            ?: project.findProperty("centralUsername") ?: ""
+        password = System.getenv("CENTRAL_PORTAL_TOKEN_PASSWORD")
+            ?: project.findProperty("centralPassword") ?: ""
+        publishingType = "USER_MANAGED"
+    }
+}
+
+// Signing follows the KEY, not the version form, so a manual snapshot publish rehearses the
+// whole release path including the signature. The key import happens inside setup-java, which
+// is exactly where a workflow change can break unnoticed until a tag depends on it. Ported from
+// mystic-crypt's #137 (#80).
+//
+//   release  + key      sign
+//   snapshot + key      sign, so the rehearsal covers the last step too
+//   snapshot, no key    skip - a local build needs no signature
+//   release,  no key    the publish task REFUSES; publishing a release unsigned is worse than
+//                       not publishing it
+def signingKey = System.getenv("GPG_PRIVATE_KEY")
+def signingPassphrase = System.getenv("GPG_PASSPHRASE")
+// The signing subkey's short id, its last 8 hex digits, when GPG_PRIVATE_KEY is an export of that
+// subkey alone and the primary key stays offline (astrapi69/lethenon, docs/launch/release-key.md;
+// #91). Without it Gradle takes the primary key, which such an export holds only as a stub, and
+// fails; Gradle 9.7.1 refused the 16-digit form (astrapi69/lethenon#155). Unset, the call is the one
+// for a full key, as before.
+def signingKeyId = System.getenv("GPG_KEY_ID")
+def hasInMemoryKey = signingKey && signingPassphrase
+def hasLocalKey = ["signing.keyId", "signing.gnupg.keyName", "signing.secretKeyRingFile"]
+    .any { project.hasProperty(it) }
+
+signing {
+    if (hasInMemoryKey) {
+        if (signingKeyId) {
+            useInMemoryPgpKeys(signingKeyId, signingKey, signingPassphrase)
+        } else {
+            useInMemoryPgpKeys(signingKey, signingPassphrase)
+        }
+        sign publishing.publications.mavenJava
+    }
+    else if (hasLocalKey) {
+        // the local gpg command with the key from signing.gnupg.keyName
+        useGpgCmd()
+        sign publishing.publications.mavenJava
+    }
+}
+
+tasks.matching { it.name.startsWith("nmcpPublishAllPublicationsToCentralPortal") }.configureEach {
+    doFirst {
+        if (releaseVersion && !hasInMemoryKey && !hasLocalKey) {
+            throw new GradleException("Refusing to publish ${project.version} unsigned. "
+                + "Set GPG_PRIVATE_KEY and GPG_PASSPHRASE, or a local signing.keyId / "
+                + "signing.gnupg.keyName / signing.secretKeyRingFile property.")
+        }
+    }
+}
