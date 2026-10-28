@@ -1,0 +1,2 @@
+# RFC 5322 messages end their lines with CRLF; keep the fixtures byte for byte on every platform
+*.eml -text

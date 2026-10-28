@@ -1,0 +1,12 @@
+From: =?UTF-8?Q?Alice_M=C3=BCller?= <alice@example.com>
+To: Bob Example <bob@example.com>, Carol Example <carol@example.com>
+Cc: Dave Example <dave@example.com>
+Bcc: Eve Example <eve@example.com>
+Subject: =?UTF-8?Q?Gr=C3=BC=C3=9Fe_aus_K=C3=B6ln?=
+Date: Tue, 28 Oct 2026 10:00:00 +0100
+MIME-Version: 1.0
+Message-ID: <with-cc-bcc-1@example.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+Grüße aus Köln an alle.

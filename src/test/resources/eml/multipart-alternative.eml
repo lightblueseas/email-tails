@@ -1,0 +1,21 @@
+From: Alice Example <alice@example.com>
+To: Bob Example <bob@example.com>
+Subject: Alternative mail
+Date: Tue, 28 Oct 2026 10:00:00 +0100
+MIME-Version: 1.0
+Message-ID: <multipart-alternative-1@example.com>
+Content-Type: multipart/alternative; boundary="alt-boundary-42"
+
+--alt-boundary-42
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+
+This is the alternative plain part.
+
+--alt-boundary-42
+Content-Type: text/html; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+
+<html><body><p>This is the alternative <i>html</i> part.</p></body></html>
+
+--alt-boundary-42--
