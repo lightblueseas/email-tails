@@ -28,8 +28,7 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
 
-import javax.activation.DataSource;
-
+import jakarta.activation.DataSource;
 import lombok.Getter;
 
 /**
@@ -77,7 +76,7 @@ public class ByteArrayDataSource implements DataSource
 	 *
 	 * @return the input stream
 	 *
-	 * @see javax.activation.DataSource#getInputStream()
+	 * @see jakarta.activation.DataSource#getInputStream()
 	 */
 	@Override
 	public InputStream getInputStream()
@@ -91,7 +90,7 @@ public class ByteArrayDataSource implements DataSource
 	 *
 	 * @return the name
 	 *
-	 * @see javax.activation.DataSource#getName()
+	 * @see jakarta.activation.DataSource#getName()
 	 */
 	@Override
 	public String getName()

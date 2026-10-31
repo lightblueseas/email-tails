@@ -27,11 +27,10 @@ package io.github.astrapi69.email.send;
 import java.io.UnsupportedEncodingException;
 import java.util.Collection;
 
-import javax.mail.MessagingException;
-import javax.mail.internet.AddressException;
-
 import io.github.astrapi69.email.messages.EmailMessage;
 import io.github.astrapi69.email.messages.EmailMessageWithAttachments;
+import jakarta.mail.MessagingException;
+import jakarta.mail.internet.AddressException;
 
 /**
  * The Interface SendMail.

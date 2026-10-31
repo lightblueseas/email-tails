@@ -31,7 +31,7 @@ import java.io.File;
 import org.junit.jupiter.api.Test;
 
 import io.github.astrapi69.file.search.PathFinder;
-import io.github.astrapi69.test.message.TestMessagesExtensions;
+import io.github.astrapi69.test.object.factory.TestMessagesFactory;
 
 /**
  * The unit test class for the class {@link Mimetypes}.
@@ -56,7 +56,7 @@ public class MimetypesTest
 		expected = "application/xml";
 		actual = Mimetypes.getMimeType(xmlFile);
 		assertTrue(expected.equals(actual),
-			TestMessagesExtensions.newFailMessage("Mimetype", expected, actual));
+			TestMessagesFactory.newFailMessage("Mimetype", expected, actual));
 	}
 
 }
