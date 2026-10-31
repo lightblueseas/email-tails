@@ -1,0 +1,27 @@
+From: Alice Example <alice@example.com>
+To: Bob Example <bob@example.com>
+Subject: Mail with pdf attachment
+Date: Tue, 28 Oct 2026 10:00:00 +0100
+MIME-Version: 1.0
+Message-ID: <multipart-mixed-pdf-1@example.com>
+Content-Type: multipart/mixed; boundary="mixed-boundary-pdf"
+
+--mixed-boundary-pdf
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+
+Hello Bob, the invoice is attached as PDF.
+
+--mixed-boundary-pdf
+Content-Type: application/pdf; name="invoice.pdf"
+Content-Disposition: attachment; filename="invoice.pdf"
+Content-Transfer-Encoding: base64
+
+JVBERi0xLjQKMSAwIG9iajw8L1R5cGUvQ2F0YWxvZy9QYWdlcyAyIDAgUj4+ZW5kb2JqCjIgMCBv
+Ymo8PC9UeXBlL1BhZ2VzL0tpZHNbMyAwIFJdL0NvdW50IDE+PmVuZG9iagozIDAgb2JqPDwvVHlw
+ZS9QYWdlL1BhcmVudCAyIDAgUi9NZWRpYUJveFswIDAgMjAwIDIwMF0+PmVuZG9iagp4cmVmCjAg
+NAowMDAwMDAwMDAwIDY1NTM1IGYgCjAwMDAwMDAwMDkgMDAwMDAgbiAKMDAwMDAwMDA1MiAwMDAw
+MCBuIAowMDAwMDAwMTAxIDAwMDAwIG4gCnRyYWlsZXI8PC9TaXplIDQvUm9vdCAxIDAgUj4+CnN0
+YXJ0eHJlZgoxNjQKJSVFT0YK
+
+--mixed-boundary-pdf--

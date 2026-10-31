@@ -21,9 +21,13 @@ ADDED:
 
 - EmlModifier, MimeMessageUtils and EmailModificationRequest: open an .eml file, change subject,
   sender and recipients, append text to the body and write it back. Covered by parameterized tests
-  that run every change over the .eml fixtures under src/test/resources/eml: plain text, html,
-  multipart/alternative, multipart/mixed with an attachment, existing CC and BCC with an
-  encoded-word subject, and quoted-printable Latin-1
+  that run every change over the .eml fixtures under src/test/resources/eml, one folder per MIME
+  shape (plain-text, html, multipart-alternative, multipart-mixed, headers, encodings,
+  unsupported); each fixture carries a .properties sidecar stating what a parser must find in it,
+  the test discovers the files, so a new fixture is a file and its sidecar. Fixtures: plain text,
+  html, multipart/alternative, multipart/mixed with a CSV and with a PDF attachment, existing CC
+  and BCC with an encoded-word subject, quoted-printable Latin-1, base64 UTF-8, and a binary body
+  that appending must refuse
 - Makefile with the family's targets: build, spotless, pitest, api-compatibility, publish-local,
   publish-snapshot and publish-central (the uploads need CONFIRM=yes), install-hooks; `make help`
   lists them
