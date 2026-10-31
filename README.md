@@ -6,54 +6,91 @@
 [![Maven Central](https://img.shields.io/maven-central/v/io.github.astrapi69/email-tails.svg?label=Maven%20Central)](https://central.sonatype.com/artifact/io.github.astrapi69/email-tails)
 [![Javadocs](http://www.javadoc.io/badge/io.github.astrapi69/email-tails.svg)](http://www.javadoc.io/doc/io.github.astrapi69/email-tails)
 [![MIT License](http://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat)](http://opensource.org/licenses/MIT)
-[![Donate](https://img.shields.io/badge/donate-PayPal-ff2244.svg)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=GVBTWLRAZ7HB8)
 [![Hits Of Code](https://hitsofcode.com/github/lightblueseas/email-tails?branch=develop)](https://hitsofcode.com/github/lightblueseas/email-tails/view?branch=develop)
 
 </div>
 
-# Overview
+# email-tails
 
-Project for send emails with attachments, built on Jakarta Mail 2.1 and Jakarta Activation 2.1
-with the Eclipse Angus implementations at runtime. Besides sending, it opens an existing .eml file,
-changes subject, sender and recipients, appends text to the body and writes it back (EmlModifier).
+A small Java library for sending e-mail with attachments and for rewriting existing `.eml` files,
+built on Jakarta Mail 2.1 and Jakarta Activation 2.1 with the Eclipse Angus implementations at
+runtime.
 
-Version 7 requires Java 25 or newer and replaces javax.mail with jakarta.mail; a project still on
-javax.mail stays on version 6.
+Version 7 requires Java 25 or newer and replaces `javax.mail` with `jakarta.mail`. A project that
+still uses `javax.mail` stays on version 6; every public signature that named a `javax` type names
+the `jakarta` one now.
 
-> Please support this project by simply putting a Github <!-- Place this tag where you want the button to render. -->
-<a class="github-button" href="https://github.com/astrapi69/email-tails" data-icon="octicon-star" aria-label="Star astrapi69/email-tails on GitHub">Star ⭐</a>
->
-> Share this library with friends on Twitter and everywhere else you can
->
-> If you love this project [![donation](https://img.shields.io/badge/donate-❤-ff2244.svg)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=GVBTWLRAZ7HB8)
+## What you get
 
-## License
+- **Sending:** `SendEmail` (interface `SendMail`) sends one message or a collection, with or
+  without attachments, through a `jakarta.mail.Session` built from your properties or from the
+  bundled `mail.properties`.
+- **Messages:** `EmailMessage` extends `MimeMessage` with `addTo`, `addCc`, `addBcc`, `addFrom`,
+  `setUtf8Content` and a charset that follows the content type; `EmailMessageWithAttachments` and
+  `EmailWithAttachments` add files, byte arrays or `DataHandler`s as parts.
+- **Rewriting .eml files:** `EmlModifier` opens an `.eml`, applies an `EmailModificationRequest`
+  (new subject, new sender, recipients to add as To/Cc/Bcc, text to append as plain or html) and
+  writes the result to another file, only after every change succeeded. `MimeMessageUtils` holds
+  the single operations.
+- **Addresses:** `EmailExtensions` builds `InternetAddress`es with personal name and charset,
+  validates an address and reads the charset out of a content type.
+- **Constants:** `Mimetypes`, `HeaderNames`, `PropertyKeys` (every `mail.*` property Jakarta Mail
+  reads) and `EmailConstants`.
 
-The source code comes under the liberal MIT License, making email-tails great for all types of applications.
+## Usage
 
-## gradle dependency
+Send a message with an attachment:
 
-Replace the variable ${latestVersion} with the current latest
-version: [![Maven Central](https://img.shields.io/maven-central/v/io.github.astrapi69/email-tails.svg?label=Maven%20Central)](https://central.sonatype.com/artifact/io.github.astrapi69/email-tails)
+```java
+Properties properties = new Properties();
+properties.put("mail.smtp.host", "smtp.example.com");
+properties.put("mail.smtp.port", "587");
+properties.put("mail.smtp.starttls.enable", "true");
+SendEmail sender = new SendEmail(properties, authenticator); // or new SendEmail(properties)
 
-You can first define the version in the ext section and add than the following gradle dependency to
-your project `build.gradle` if you want to import the core functionality of email-tails:
+EmailMessage message = new EmailMessage(sender.getSession());
+message.addFrom(EmailExtensions.newAddress("alice@example.com", "Alice"));
+message.addTo(EmailExtensions.newAddress("bob@example.com", "Bob"));
+message.setSubject("Report", "UTF-8");
 
-define version in file gradle.properties
+EmailMessageWithAttachments withAttachments = new EmailMessageWithAttachments(message);
+MimeBodyPart text = new MimeBodyPart();
+text.setText("Hello Bob, the report is attached.", "UTF-8");
+withAttachments.addAttachment(text);
+withAttachments.addAttachment(new File("report.csv"));
 
+String messageId = sender.sendEmailMessage(message);
 ```
-emailTailsVersion=${latestVersion}
+
+Rewrite an existing `.eml` file:
+
+```java
+EmailModificationRequest request = EmailModificationRequest.builder()
+    .subject("Fwd: Report")
+    .from(new InternetAddress("alice@example.com", "Alice"))
+    .addCc(List.of(new InternetAddress("carol@example.com")))
+    .bodyAppend("Forwarded by Alice.")
+    .bodySubtype("plain")
+    .build();
+
+EmlModifier.modifyEml(Path.of("in.eml"), Path.of("out.eml"), request);
 ```
 
-or in build.gradle ext area
+A null subject, sender or text leaves that part of the message as it is; the recipient lists are
+added to the message, never replace its recipients. A body that is neither text nor multipart is
+refused with an `IllegalStateException`, and no output file is written.
 
-```
-    emailTailsVersion = "${latestVersion}"
-```
+## Install
 
-or, with a version catalog, in gradle/libs.versions.toml
+Replace `${latestVersion}` with the version on Maven Central:
+[![Maven Central](https://img.shields.io/maven-central/v/io.github.astrapi69/email-tails.svg?label=Maven%20Central)](https://central.sonatype.com/artifact/io.github.astrapi69/email-tails)
 
-```
+<details>
+  <summary>Gradle (click to expand)</summary>
+
+In `gradle/libs.versions.toml`:
+
+```toml
 [versions]
 email-tails-version = "${latestVersion}"
 
@@ -61,143 +98,104 @@ email-tails-version = "${latestVersion}"
 email-tails = { module = "io.github.astrapi69:email-tails", version.ref = "email-tails-version" }
 ```
 
-then add the dependency to the dependencies area
+and in the dependencies:
 
+```groovy
+implementation libs.email.tails
 ```
-    implementation("io.github.astrapi69:email-tails:$emailTailsVersion")
+
+Or, without a catalog, with `emailTailsVersion=${latestVersion}` in `gradle.properties`:
+
+```groovy
+implementation("io.github.astrapi69:email-tails:$emailTailsVersion")
 ```
 
-## Maven dependency
+</details>
 
-Maven dependency is now on Maven Central.
-Check out [Maven Central](https://central.sonatype.com/artifact/io.github.astrapi69/email-tails) for the latest
-releases, and the [Central Portal snapshots](https://central.sonatype.com/repository/maven-snapshots/) for snapshots.
+<details>
+  <summary>Maven (click to expand)</summary>
 
-Add the following maven dependency to your project `pom.xml` if you want to import the core functionality of email-tails:
+```xml
+<properties>
+    <email-tails.version>${latestVersion}</email-tails.version>
+</properties>
 
-Than you can add the dependency to your dependencies:
+<dependency>
+    <groupId>io.github.astrapi69</groupId>
+    <artifactId>email-tails</artifactId>
+    <version>${email-tails.version}</version>
+</dependency>
+```
 
-    <properties>
-            ...
-        <!-- EMAIL-TAILS version -->
-        <email-tails.version>${latestVersion}</email-tails.version>
-            ...
-    </properties>
-            ...
-        <dependencies>
-            ...
-            <!-- EMAIL-TAILS DEPENDENCY -->
-            <dependency>
-                <groupId>io.github.astrapi69</groupId>
-                <artifactId>email-tails</artifactId>
-                <version>${email-tails.version}</version>
-            </dependency>
-            ...
-        </dependencies>
+</details>
 
+The Jakarta Mail and Activation APIs come as `api` dependencies, the Angus implementations as
+runtime dependencies; a consumer needs to declare neither. Snapshots of the next version are in
+the [Central Portal snapshot repository](https://central.sonatype.com/repository/maven-snapshots/):
+
+```groovy
+repositories {
+    maven {
+        url = "https://central.sonatype.com/repository/maven-snapshots/"
+        mavenContent { snapshotsOnly() }
+    }
+}
+```
 
 ## Development
 
-The build is Gradle 9 with a version catalog in `gradle/libs.versions.toml`; the build logic sits in
-`gradle/*.gradle`, listed in `gradle/gradle-files.list`. `make help` lists the make targets that wrap
-the everyday Gradle calls.
+Gradle 9 with a version catalog in `gradle/libs.versions.toml`; the build logic sits in
+`gradle/*.gradle`, listed in `gradle/gradle-files.list`. `make help` lists the make targets that
+wrap the everyday Gradle calls:
 
 ```
-./gradlew build            # compile, test, jacoco, spotless check, API compatibility against the last release
-./gradlew spotlessApply    # format, order imports, add the MIT header
-./gradlew pitest           # mutation testing; the floor stands in build.gradle
-./gradlew dependencyUpdates versionCatalogUpdate --interactive   # see and stage dependency updates
+make build             # clean build: tests, Jacoco, Spotless check, API compatibility against the last release
+make spotless          # format, order imports, add the MIT header
+make pitest            # mutation testing; the floor stands in build.gradle
+make dependency-updates
 ```
+
+The tests of `EmlModifier` run over the `.eml` fixtures under `src/test/resources/eml`, one folder
+per MIME shape, each fixture with a `.properties` sidecar stating what a parser must find in it; a
+new fixture is a file and its sidecar, see the [README there](src/test/resources/eml/README.md).
 
 Install the commit hook once after cloning; it refuses a commit that credits a non-human
 collaborator, the same rule the commit-provenance workflow enforces on pull requests:
 
 ```
-git config core.hooksPath .githooks
+make install-hooks
 ```
 
-Releasing is a manual step: push a `RELEASE-*` tag (`./gradlew tagRelease`), and the publish
-workflow uploads the signed artifacts to the Central Portal. A push to develop publishes a
-snapshot. Security reports go through [SECURITY.md](SECURITY.md), not the issue tracker.
+Releasing is a manual step: push a `RELEASE-*` tag (`make tag-release CONFIRM=yes`), and the
+publish workflow uploads the signed artifacts to the Central Portal. A push to develop publishes a
+snapshot.
 
-## Want to Help and improve it? ###
+## Security
 
-The source code for email-tails are on GitHub. Please feel free to fork and send pull requests!
+Security reports go through [SECURITY.md](SECURITY.md) and GitHub's private vulnerability
+reporting, not through the issue tracker.
 
-Create your own fork of [lightblueseas/email-tails/fork](https://github.com/lightblueseas/email-tails/fork)
+## Support this project
 
-To share your changes, [submit a pull request](https://github.com/lightblueseas/email-tails/pull/new/develop).
+email-tails is built and maintained by a single developer, like the rest of the astrapi69
+family. If it helps you, support goes directly into development time:
 
-Don't forget to add new units tests on your changes.
+- [GitHub Sponsors](https://github.com/sponsors/astrapi69)
+- [Liberapay](https://liberapay.com/astrapi69)
+- [Ko-fi](https://ko-fi.com/astrapi69)
+- [PayPal](https://www.paypal.com/donate/?cmd=_s-xclick&hosted_button_id=MJ7V43GU2H386)
 
-## Contacting the Developers
+A GitHub star and a mention to someone who sends mail from Java help too.
 
-Do not hesitate to contact the email-tails developers with your questions, concerns, comments, bug reports, or feature requests.
-- Feature requests, questions and bug reports can be reported at the [issues page](https://github.com/lightblueseas/email-tails/issues).
+## Contributing
 
-## Note
+Pull requests are welcome; please add tests for what you change. The commit hook above and the
+workflows on a pull request (build, mutation score, commit provenance, closing references) say
+what a change has to pass. Questions, bug reports and feature requests go to the
+[issues](https://github.com/lightblueseas/email-tails/issues).
+
+## License
+
+The source code comes under the liberal MIT License, see [LICENSE](LICENSE).
 
 No animals were harmed in the making of this library.
-
-# Donations
-
-This project is kept as an open source product and relies on contributions to remain being
-developed. If you like this library, please consider a donation
-
-over paypal:
-<br>
-<br>
-<a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=MJ7V43GU2H386" target="_blank">
-<img src="https://www.paypalobjects.com/en_US/GB/i/btn/btn_donateCC_LG.gif"
-alt="PayPal this"
-title="PayPal – The safer, easier way to pay online!"
-style="border: none" />
-</a>
-<br>
-<br>
-or over bitcoin(BTC) with this address:
-
-bc1ql2y99q7e8psndhcc3gferk03esw3qqf677rhjy
-
-<img src="https://github.com/astrapi69/jgeohash/blob/master/src/main/resources/img/bc1ql2y99q7e8psndhcc3gferk03esw3qqf677rhjy.png"
-alt="Donation Bitcoin Wallet" width="250"/>
-
-or over FIO with this address:
-
-FIO7tFMUVAA9cHiPPqKMfMXiSxHrbpiFyRYqTketNuM67aULuwjop
-
-<img src="https://github.com/astrapi69/jgeohash/blob/master/src/main/resources/img/FIO7tFMUVAA9cHiPPqKMfMXiSxHrbpiFyRYqTketNuM67aULuwjop.png"
-alt="Donation FIO Wallet" width="250"/>
-
-or over Ethereum(ETH) with:
-
-0xc057D159D3C8f3311E73568b334FF6fE82EB2b7D
-
-<img src="https://github.com/astrapi69/jgeohash/blob/master/src/main/resources/img/0xc057D159D3C8f3311E73568b334FF6fE82EB2b7D.png"
-alt="Donation Ethereum Wallet" width="250"/>
-
-or over Ethereum Classic(ETC) with:
-
-0xF708cA86D86C246B69c3F4BAe431eBbe0c2bfddD
-
-<img src="https://github.com/astrapi69/jgeohash/blob/master/src/main/resources/img/0xF708cA86D86C246B69c3F4BAe431eBbe0c2bfddD.png"
-alt="Donation Ethereum Classic Wallet" width="250"/>
-
-or over Dogecoin(DOGE) with:
-
-D5yi4Um8cpakd6yPRm2hGWuQ5nrVzhSSW1
-
-<img src="https://github.com/astrapi69/jgeohash/blob/master/src/main/resources/img/D5yi4Um8cpakd6yPRm2hGWuQ5nrVzhSSW1.png"
-alt="Donation Dogecoin Wallet" width="250"/>
-
-or over Monero(XMR) with:
-
-49bqeRQ7Bf49oJFVC72pqpe5hFbb62pfXDYPdLsadGGF81KZW2ZfrPZ8PbAVu5X2v1TYAspeczMya3cYQysNS4usRRPQHVw
-
-<img src="https://github.com/astrapi69/jgeohash/blob/master/src/main/resources/img/49bqeRQ7Bf49oJFVC72pqpe5hFbb62pfXDYPdLsadGGF81KZW2ZfrPZ8PbAVu5X2v1TYAspeczMya3cYQysNS4usRRPQHVw.png"
-alt="Donation Monero Wallet" width="250"/>
-
-or over flattr:
-<a href="https://flattr.com/submit/auto?fid=r7vp62&url=https%3A%2F%2Fgithub.com%2Flightblueseas%2Femail-tails" target="_blank">
-<img src="http://api.flattr.com/button/flattr-badge-large.png" alt="Flattr this" title="Flattr this" border="0" />
-</a>
