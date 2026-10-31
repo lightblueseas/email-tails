@@ -4,7 +4,7 @@
 [![Coverage Status](https://codecov.io/gh/lightblueseas/email-tails/branch/develop/graph/badge.svg)](https://codecov.io/gh/lightblueseas/email-tails)
 [![Open Issues](https://img.shields.io/github/issues/lightblueseas/email-tails.svg?style=flat)](https://github.com/lightblueseas/email-tails/issues)
 [![Maven Central](https://img.shields.io/maven-central/v/io.github.astrapi69/email-tails.svg?label=Maven%20Central)](https://central.sonatype.com/artifact/io.github.astrapi69/email-tails)
-[![Javadocs](http://www.javadoc.io/badge/io.github.astrapi69/email-tails.svg)](http://www.javadoc.io/doc/io.github.astrapi69/email-tails)
+[![Javadocs](https://javadoc.io/badge2/io.github.astrapi69/email-tails/javadoc.svg)](https://javadoc.io/doc/io.github.astrapi69/email-tails)
 [![MIT License](http://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat)](http://opensource.org/licenses/MIT)
 [![Hits Of Code](https://hitsofcode.com/github/lightblueseas/email-tails?branch=develop)](https://hitsofcode.com/github/lightblueseas/email-tails/view?branch=develop)
 
