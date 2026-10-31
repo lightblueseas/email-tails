@@ -1,7 +1,7 @@
 ## Change log
 ----------------------
 
-Version 7-SNAPSHOT
+Version 7
 -------------
 
 BREAKING:
@@ -39,6 +39,14 @@ ADDED:
 - github: CodeQL, commit provenance, closing references and release freeze workflows, a publish
   workflow for RELEASE-* tags, codecov configuration, SECURITY.md, a commit-msg hook under
   .githooks (install with `git config core.hooksPath .githooks`)
+- publishing: an upload to the Central Portal leaves only from CI, a release only from its
+  RELEASE-* tag, never from a local tree (#12, #13); an upload refuses a half-configured signing
+  key, GPG_PRIVATE_KEY without GPG_PASSPHRASE or the reverse, instead of going up unsigned while
+  CI stays green (#14, #15, astrapi69/crypt-data#105)
+- README rewritten for version 7: what the library does, both uses in code, the catalog, ext and
+  Maven forms of the dependency, the snapshot repository, the make targets, the fixture tree, the
+  hook, the release path and the security policy; the donation section with wallet addresses is
+  replaced by the four funding channels of FUNDING.yml (GitHub Sponsors, Liberapay, Ko-fi, PayPal)
 
 CHANGED:
 
@@ -49,6 +57,10 @@ CHANGED:
 - jakarta.mail-api and jakarta.activation-api are api dependencies, since this library's public
   types extend and expose them; angus-mail and angus-activation are runtimeOnly
 - mime-util no longer drags the slf4j-log4j12 binding and log4j 1.2.14 onto the classpath
+- the javadoc jar is no longer empty: delombok had copied lombok.config and package.html into the
+  javadoc input, so release 6 shipped a 261-byte javadoc jar and javadoc.io shows no version;
+  lombok.config sits in the project root and package.html became package-info.java. The README's
+  javadoc badge uses javadoc.io's badge2 form, which reads "unknown" until this release is indexed
 
 REMOVED:
 
