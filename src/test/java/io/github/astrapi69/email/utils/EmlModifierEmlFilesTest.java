@@ -29,16 +29,21 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.UncheckedIOException;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Properties;
 import java.util.stream.Stream;
 
+import org.junit.jupiter.api.Named;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -56,61 +61,175 @@ import jakarta.mail.internet.InternetAddress;
 import jakarta.mail.internet.MimeMessage;
 
 /**
- * Drives {@link EmlModifier} over the .eml files under src/test/resources/eml: a plain text mail,
- * an html mail, a multipart/alternative mail, a multipart/mixed mail with an attachment, a mail
- * that already carries CC and BCC recipients and an encoded-word subject, and a quoted-printable
- * Latin-1 mail. Every change is checked on every file, together with what must stay as it was.
+ * Drives {@link EmlModifier} over every .eml file under src/test/resources/eml, one folder per MIME
+ * shape (plain-text, html, multipart-alternative, multipart-mixed, headers, encodings). Each
+ * fixture outside the unsupported folder has a .properties sidecar of the same name that states
+ * what a correct parser must find in it; every change is checked on every fixture, together with
+ * what must stay as it was. Fixtures under unsupported have no sidecar: appending text to them must
+ * be refused and write nothing. A new fixture is a file and its sidecar, nothing here changes.
  */
 class EmlModifierEmlFilesTest
 {
 
-	/** One .eml file and what a correct parser must find in it. */
-	record EmlFixture(String fileName, String subject, String bodyMarker, int to, int cc, int bcc,
-		boolean multipart) {
+	static final String UNSUPPORTED = "unsupported";
+
+	/** One .eml file and what a correct parser must find in it, as its sidecar states. */
+	record EmlFixture(String name, Path path, String subject, String bodyMarker, int to, int cc,
+		int bcc, boolean multipart) {
+		static EmlFixture read(Path root, Path eml)
+		{
+			Path sidecar = sidecarOf(eml);
+			Properties expected = new Properties();
+			try (BufferedReader reader = Files.newBufferedReader(sidecar, StandardCharsets.UTF_8))
+			{
+				expected.load(reader);
+			}
+			catch (IOException e)
+			{
+				throw new UncheckedIOException("sidecar of " + relative(root, eml), e);
+			}
+			return new EmlFixture(relative(root, eml), eml, required(expected, "subject", eml),
+				required(expected, "bodyMarker", eml),
+				Integer.parseInt(required(expected, "to", eml)),
+				Integer.parseInt(required(expected, "cc", eml)),
+				Integer.parseInt(required(expected, "bcc", eml)),
+				Boolean.parseBoolean(required(expected, "multipart", eml)));
+		}
+
+		private static String required(Properties expected, String key, Path eml)
+		{
+			String value = expected.getProperty(key);
+			if (value == null)
+			{
+				throw new IllegalStateException(
+					"the sidecar of " + eml.getFileName() + " has no '" + key + "'");
+			}
+			return value.trim();
+		}
+
 		@Override
 		public String toString()
 		{
-			return fileName;
+			return name;
 		}
 	}
 
-	static Stream<EmlFixture> fixtures()
+	static Path root()
 	{
-		return Stream.of(
-			new EmlFixture("plain-text.eml", "Plain text mail",
-				"this is a plain text mail with umlauts: äöü.", 1, 0, 0, false),
-			new EmlFixture("html.eml", "Html mail", "Hello <b>Bob</b>, this is an html mail.", 1, 0,
-				0, false),
-			new EmlFixture("multipart-alternative.eml", "Alternative mail",
-				"This is the alternative plain part.", 1, 0, 0, true),
-			new EmlFixture("multipart-mixed-attachment.eml", "Mail with attachment",
-				"Hello Bob, see the attached report.", 1, 0, 0, true),
-			new EmlFixture("with-cc-bcc.eml", "Grüße aus Köln", "Grüße aus Köln an alle.", 2, 1, 1,
-				false),
-			new EmlFixture("quoted-printable-latin1.eml", "Quoted printable mail",
-				"Schöne Grüße mit Latin-1: äöü.", 1, 0, 0, false));
+		return new File(PathFinder.getSrcTestResourcesDir(), "eml").toPath();
 	}
 
-	static Stream<EmlFixture> textFixtures()
+	static Path sidecarOf(Path eml)
+	{
+		String file = eml.getFileName().toString();
+		return eml
+			.resolveSibling(file.substring(0, file.length() - ".eml".length()) + ".properties");
+	}
+
+	static String relative(Path root, Path file)
+	{
+		return root.relativize(file).toString().replace(File.separatorChar, '/');
+	}
+
+	static boolean isUnsupported(Path root, Path eml)
+	{
+		return root.relativize(eml).getName(0).toString().equals(UNSUPPORTED);
+	}
+
+	static List<Path> emlFiles() throws IOException
+	{
+		try (Stream<Path> files = Files.walk(root()))
+		{
+			return files.filter(path -> path.toString().endsWith(".eml")).sorted().toList();
+		}
+	}
+
+	static Stream<EmlFixture> fixtures() throws IOException
+	{
+		Path root = root();
+		return emlFiles().stream().filter(eml -> !isUnsupported(root, eml))
+			.map(eml -> EmlFixture.read(root, eml));
+	}
+
+	static Stream<EmlFixture> textFixtures() throws IOException
 	{
 		return fixtures().filter(fixture -> !fixture.multipart());
+	}
+
+	static Stream<Named<Path>> unsupportedFixtures() throws IOException
+	{
+		Path root = root();
+		return emlFiles().stream().filter(eml -> isUnsupported(root, eml))
+			.map(eml -> Named.of(relative(root, eml), eml));
 	}
 
 	@TempDir
 	Path tempDir;
 
+	@Test
+	void theFixtureTreeIsComplete() throws IOException
+	{
+		Path root = root();
+		List<String> complaints = new ArrayList<>();
+		List<Path> emls = emlFiles();
+		assertFalse(emls.isEmpty(), "no .eml fixture under " + root);
+		for (Path eml : emls)
+		{
+			String text = Files.readString(eml, StandardCharsets.ISO_8859_1);
+			if (text.replace("\r\n", "").contains("\n"))
+			{
+				complaints
+					.add(relative(root, eml) + ": a line ends with a bare LF, RFC 5322 wants CRLF");
+			}
+			if (isUnsupported(root, eml))
+			{
+				if (Files.exists(sidecarOf(eml)))
+				{
+					complaints.add(relative(root, eml) + ": a fixture under " + UNSUPPORTED
+						+ " has a sidecar, but nothing reads it there");
+				}
+			}
+			else if (!Files.exists(sidecarOf(eml)))
+			{
+				complaints
+					.add(relative(root, eml) + ": no sidecar " + sidecarOf(eml).getFileName());
+			}
+		}
+		try (Stream<Path> files = Files.walk(root))
+		{
+			for (Path file : files.filter(Files::isRegularFile).toList())
+			{
+				String name = file.getFileName().toString();
+				if (name.endsWith(".properties")
+					&& !Files.exists(file.resolveSibling(name.replace(".properties", ".eml"))))
+				{
+					complaints.add(relative(root, file) + ": a sidecar without its .eml");
+				}
+				else if (!name.endsWith(".eml") && !name.endsWith(".properties")
+					&& !name.equals("README.md"))
+				{
+					complaints
+						.add(relative(root, file) + ": neither .eml, .properties nor README.md");
+				}
+			}
+		}
+		assertTrue(complaints.isEmpty(), String.join("\n", complaints));
+	}
+
 	@ParameterizedTest(name = "{0}")
 	@MethodSource("fixtures")
-	void fixtureParsesAsDescribed(EmlFixture fixture) throws Exception
+	void fixtureParsesAsItsSidecarStates(EmlFixture fixture) throws Exception
 	{
-		MimeMessage original = read(input(fixture));
+		MimeMessage original = read(fixture.path());
 
 		assertEquals(fixture.subject(), original.getSubject());
-		assertEquals(fixture.to(), count(original.getRecipients(Message.RecipientType.TO)));
-		assertEquals(fixture.cc(), count(original.getRecipients(Message.RecipientType.CC)));
-		assertEquals(fixture.bcc(), count(original.getRecipients(Message.RecipientType.BCC)));
-		assertEquals(fixture.multipart(), original.getContent() instanceof Multipart);
-		assertTrue(bodyText(original).contains(fixture.bodyMarker()));
+		assertEquals(fixture.to(), count(original.getRecipients(Message.RecipientType.TO)), "to");
+		assertEquals(fixture.cc(), count(original.getRecipients(Message.RecipientType.CC)), "cc");
+		assertEquals(fixture.bcc(), count(original.getRecipients(Message.RecipientType.BCC)),
+			"bcc");
+		assertEquals(fixture.multipart(), original.getContent() instanceof Multipart, "multipart");
+		assertTrue(bodyText(original).contains(fixture.bodyMarker()),
+			"body contains '" + fixture.bodyMarker() + "'");
 	}
 
 	@ParameterizedTest(name = "{0}")
@@ -284,11 +403,12 @@ class EmlModifierEmlFilesTest
 		assertEquals("Via string paths", read(output).getSubject());
 	}
 
-	@Test
-	void appendingToABinaryBodyIsRefusedAndWritesNothing() throws Exception
+	@ParameterizedTest(name = "{0}")
+	@MethodSource("unsupportedFixtures")
+	void appendingToAnUnsupportedBodyIsRefusedAndWritesNothing(Path eml) throws Exception
 	{
-		Path input = copyFixture("binary-body.eml");
-		Path output = tempDir.resolve("modified-binary-body.eml");
+		Path input = copy(eml);
+		Path output = tempDir.resolve("modified-" + input.getFileName());
 		EmailModificationRequest request = EmailModificationRequest.builder()
 			.bodyAppend("cannot go here").build();
 
@@ -300,20 +420,25 @@ class EmlModifierEmlFilesTest
 
 	private Path input(EmlFixture fixture) throws IOException
 	{
-		return copyFixture(fixture.fileName());
+		return copy(fixture.path());
 	}
 
 	private Path output(EmlFixture fixture)
 	{
-		return tempDir.resolve("modified-" + fixture.fileName());
+		return tempDir.resolve("modified-" + flat(fixture.path()));
 	}
 
-	private Path copyFixture(String fileName) throws IOException
+	/** Copies a fixture into the temporary directory under a name that keeps its folder. */
+	private Path copy(Path eml) throws IOException
 	{
-		File source = new File(PathFinder.getSrcTestResourcesDir(), "eml/" + fileName);
-		Path target = tempDir.resolve(fileName);
-		Files.copy(source.toPath(), target);
+		Path target = tempDir.resolve(flat(eml));
+		Files.copy(eml, target);
 		return target;
+	}
+
+	private static String flat(Path eml)
+	{
+		return relative(root(), eml).replace('/', '_');
 	}
 
 	private static void assertRecipientsAdded(MimeMessage original, MimeMessage modified,
