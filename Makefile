@@ -9,7 +9,7 @@ GRADLE := JAVA_HOME=$(JAVA_HOME) ./gradlew
 
 .PHONY: help build build-fast test clean spotless spotless-java spotless-misc spotless-check \
 	pitest api-compatibility jacoco-report jar javadoc dependencies dependency-updates \
-	version-catalog-format version-catalog-update publish-local publish-snapshot publish-central \
+	version-catalog-format version-catalog-update publish-local \
 	tag-release install-hooks check-commit-provenance
 
 help:
@@ -37,8 +37,7 @@ help:
 	@echo "  version-catalog-update  write the newer versions into the catalog"
 	@echo ""
 	@echo "  publish-local           install into the local Maven repository"
-	@echo "  publish-snapshot        upload a SNAPSHOT to the Central Portal snapshot repository (needs CONFIRM=yes)"
-	@echo "  publish-central         upload a release to Maven Central (needs CONFIRM=yes)"
+	@echo "  (uploads to the Central Portal leave only from CI: a push to develop or publish.yml, see #13)"
 	@echo "  tag-release             PUBLISHES: the RELEASE tag triggers publish.yml (needs CONFIRM=yes)"
 	@echo ""
 	@echo "  install-hooks           point git at .githooks (once per clone or worktree)"
@@ -101,22 +100,9 @@ version-catalog-update:
 publish-local:
 	$(GRADLE) publishToMavenLocal
 
-# a snapshot is what a push to develop publishes anyway; by hand it exists so that a consumer can
-# be built against this branch before it is merged
-publish-snapshot:
-	@test "$(CONFIRM)" = "yes" || { \
-		echo "publish-snapshot uploads to the Central Portal snapshot repository. Re-run with CONFIRM=yes if that is intended."; \
-		exit 1; }
-	@grep -q -- '-SNAPSHOT' gradle.properties || { echo "projectVersion is not a SNAPSHOT"; exit 1; }
-	$(GRADLE) nmcpPublishAllPublicationsToCentralPortalSnapshots
-
-# publishingType is USER_MANAGED, so this uploads a bundle that still waits for a click in the
-# Portal. That is a net, not a permission: a published version can never be replaced.
-publish-central:
-	@test "$(CONFIRM)" = "yes" || { \
-		echo "publish-central uploads to Maven Central. Re-run with CONFIRM=yes if that is intended."; \
-		exit 1; }
-	$(GRADLE) nmcpPublishAllPublicationsToCentralPortal
+# Uploads to the Central Portal leave only from CI since #13 (gradle/publishing.gradle refuses a local tree):
+# a snapshot from a push to develop or a manual run of publish.yml, a release from its RELEASE-* tag.
+# There is deliberately no make target for them.
 
 # Tagging is publishing: .github/workflows/publish.yml triggers on 'RELEASE-*' tag pushes. Decide
 # whether to upload BEFORE the tag, not after it.
