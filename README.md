@@ -159,13 +159,6 @@ The tests of `EmlModifier` run over the `.eml` fixtures under `src/test/resource
 per MIME shape, each fixture with a `.properties` sidecar stating what a parser must find in it; a
 new fixture is a file and its sidecar, see the [README there](src/test/resources/eml/README.md).
 
-Install the commit hook once after cloning; it refuses a commit that credits a non-human
-collaborator, the same rule the commit-provenance workflow enforces on pull requests:
-
-```
-make install-hooks
-```
-
 Releasing is a manual step: push a `RELEASE-*` tag (`make tag-release CONFIRM=yes`), and the
 publish workflow uploads the signed artifacts to the Central Portal. A push to develop publishes a
 snapshot.
@@ -189,9 +182,8 @@ A GitHub star and a mention to someone who sends mail from Java help too.
 
 ## Contributing
 
-Pull requests are welcome; please add tests for what you change. The commit hook above and the
-workflows on a pull request (build, mutation score, commit provenance, closing references) say
-what a change has to pass. Questions, bug reports and feature requests go to the
+Pull requests are welcome; please add tests for what you change. The workflows on a pull request
+(build, mutation score, closing references) say what a change has to pass. Questions, bug reports and feature requests go to the
 [issues](https://github.com/lightblueseas/email-tails/issues).
 
 ## License
